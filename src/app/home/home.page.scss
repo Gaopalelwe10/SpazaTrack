@@ -1,0 +1,14 @@
+input {
+    color: red;
+}
+
+.mapboxgl-ctrl-geocoder input {
+    border: red;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}

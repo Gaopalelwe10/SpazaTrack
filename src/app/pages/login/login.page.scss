@@ -1,0 +1,66 @@
+.error {
+    color: red;
+    padding-left: 20px;
+    text-align: left;
+}
+
+// ion-input {
+//     border: 1px solid black;
+//     border-radius: 10px;
+// }
+.group {
+    background-color: transparent;
+    color: white;
+}
+
+.imgC {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.forms {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    // max-width: 525px;
+    min-height: 670px;
+    position: absolute;
+    color: white;
+    // background: url('/assets/img/map1.jpg') 0 0/100% 100% no-repeat;
+    background: url('/assets/img/map1.jpg') 0 0/100% 100% no-repeat;
+    box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
+}
+
+.form {
+    width: 100%;
+    height: 100%;
+    color: white;
+    position: absolute;
+    padding: 20px 70px 50px 70px;
+    // background: rgba(179, 179, 179, 0.623);
+    -webkit-text-fill-color: aliceblue;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    text-align: center;
+}
+
+.form .group .button {
+    background: #c04f1e;
+    width: 100%;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 25px;
+}
+
+img {
+    border-radius: 50%;
+    text-align: center;
+}
+
+.ion-button {
+    background: #c04f1e;
+}

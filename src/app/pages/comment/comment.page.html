@@ -1,0 +1,156 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="home"></ion-back-button>
+        </ion-buttons>
+
+        <ion-title>{{spazaName}}</ion-title>
+
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div *ngIf="spaza$ | async as spaza">
+        <ion-card color="lightb">
+            <img src="{{spaza.photoURL}}">
+            <!-- <ion-card-header>
+
+                <ion-card-title>{{ spaza.spazaName }}</ion-card-title>
+            </ion-card-header> -->
+            <ion-card-content>
+
+                <p>
+                    <ion-icon name="information" slot="start" color="primary"></ion-icon>{{ spaza.Discription }}
+                </p>
+                <br>
+                <p>
+                    <ion-icon name="pin" slot="start" color="primary"></ion-icon> {{spaza.Address}}
+                </p>
+                <p>
+                    <ion-icon name="time" slot="start" color="primary"></ion-icon> {{spaza.Hours}}
+                </p>
+                <p>
+                    <ion-icon name="call" slot="start" color="primary"></ion-icon> {{spaza.Number}}
+                </p>
+                <br>
+                <p>
+                    Total Comments: {{ spaza.commentCount }}
+                </p>
+            </ion-card-content>
+        </ion-card>
+
+        <ion-item>
+            <ion-label>Rate Spaza</ion-label>
+            <ionic4-star-rating [(ngModel)]="rate" activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#ffb400 " defaultColor="gray" readonly="false" fontSize="20px" (ratingChanged)="onModelChange($event)">
+            </ionic4-star-rating>
+        </ion-item>
+        <ion-item>
+
+            <ion-textarea [(ngModel)]="text" (keyup.enter)="addComment()" placeholder="Add a comment"></ion-textarea>
+        </ion-item>
+
+
+
+        <!-- Aggregated comments on the post document -->
+        <ng-container *ngIf="!comments$">
+            <ion-item>
+                <ion-label>Recent Comments</ion-label>
+            </ion-item>
+            <div *ngFor="let comment of spaza.recentComments">
+                <div *ngFor="let user of users | async">
+
+                    <ion-card *ngIf="user.uid === comment.uid" color="lightb">
+                        <ion-item>
+                            <ion-avatar slot="start" *ngIf="user.photoURL =='' ">
+                                <img src="/assets/img/avatar.svg">
+                            </ion-avatar>
+                            <ion-avatar slot="start" *ngIf="user.photoURL !='' ">
+                                <img src="{{user.photoURL}}">
+                            </ion-avatar>
+
+                            <ion-label>
+                                <h2>{{user.displayName}}</h2>
+                                <h3>
+                                    <!-- <rating id="ionicRating2" [(ngModel)]="comment.rate" readonly="true" size="default"></rating> -->
+
+                                    <ionic4-star-rating [(ngModel)]="comment.rate" activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#ffb400 " defaultColor="gray" readonly="true" fontSize="10px">
+                                    </ionic4-star-rating>
+                                </h3>
+                            </ion-label>
+                        </ion-item>
+                        <ion-card-content>
+                            <p color="light">{{ comment.createdAt |date: 'medium' }}</p>
+                            <h5>{{ comment.content }}</h5>
+                        </ion-card-content>
+                    </ion-card>
+                </div>
+
+            </div>
+        </ng-container>
+
+        <!-- Firestore comment documents from the subcollection -->
+        <!-- <div *ngFor="let comment of comments$ | async">
+            <ion-card>
+                <ion-item>
+                    <ion-avatar slot="start">
+                        <img src="/assets/img/avatar.svg">
+                    </ion-avatar>
+                    <ion-label>
+                        <h2>Finn</h2>
+                        <h3>
+                           
+                            <ionic4-star-rating [(ngModel)]="comment.rate" activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#ffb400 " defaultColor="gray" readonly="true" fontSize="10px">
+                            </ionic4-star-rating>
+                        </h3>
+                    </ion-label>
+                </ion-item>
+                <ion-card-content>
+                    <p color="light">{{ comment.createdAt |date: 'medium' }}</p>
+                    <h5>{{ comment.content }}</h5>
+                </ion-card-content>
+            </ion-card>
+        </div> -->
+
+        <!-- Firestore comment documents from the subcollection -->
+        <div *ngFor="let comment of comments$ | async">
+            <div *ngFor="let user of users | async">
+
+                <ion-card *ngIf="user.uid === comment.uid" color="lightb">
+                    <ion-item>
+                        <ion-avatar slot="start" *ngIf="user.photoURL =='' ">
+                            <img src="/assets/img/avatar.svg">
+                        </ion-avatar>
+                        <ion-avatar slot="start" *ngIf="user.photoURL !='' ">
+                            <img src="{{user.photoURL}}">
+                        </ion-avatar>
+
+                        <ion-label>
+                            <h2>{{user.displayName}}</h2>
+                            <h3>
+                                <!-- <rating id="ionicRating2" [(ngModel)]="comment.rate" readonly="true" size="default"></rating> -->
+
+                                <ionic4-star-rating [(ngModel)]="comment.rate" activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#ffb400 " defaultColor="gray" readonly="true" fontSize="10px">
+                                </ionic4-star-rating>
+                            </h3>
+                        </ion-label>
+                    </ion-item>
+                    <ion-card-content>
+                        <p color="light">{{ comment.createdAt |date: 'medium' }}</p>
+                        <h5>{{ comment.content }}</h5>
+                    </ion-card-content>
+                </ion-card>
+            </div>
+        </div>
+
+        <ion-button (click)="loadMore()">
+
+            Load all {{ spaza.commentCount }} comments
+        </ion-button>
+
+
+
+    </div>
+
+
+
+</ion-content>

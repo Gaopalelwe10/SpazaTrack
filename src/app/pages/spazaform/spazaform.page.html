@@ -1,0 +1,301 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start" no-border>
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <!-- <ion-title>Toolbar Title</ion-title> -->
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content fullscreen>
+
+    <div *ngIf="RegisterForm =='true'">
+        <form [formGroup]="form" class="my-form">
+            <div class="forms">
+
+                <div class="form">
+                    <br><br>
+                    <div class="profile-image">
+                        <div *ngIf="urlPath =='' ">
+                            <img src="/assets/img/avatar.svg">
+                        </div>
+
+                        <div *ngIf="urlPath !='' ">
+                            <img data-src="{{urlPath}}" (click)="zoom(user)">
+                        </div>
+
+                        <div class="image-upload">
+                            <ion-fab horizontal="center" vertical="top" class="fab" size="small">
+                                <ion-fab-button color="primary">
+                                    <ion-icon name="camera" class="input"> </ion-icon>
+                                </ion-fab-button>
+                                <ion-fab-list side="start">
+                                    <ion-fab-button color="primary">
+                                        <ion-icon name="camera" (click)="pickImage()" class="camera"> </ion-icon>
+                                    </ion-fab-button>
+
+                                </ion-fab-list>
+
+                                <ion-fab-list side="end">
+                                    <ion-fab-button color="primary">
+                                        <label for="file-input2">
+                                                        <ion-icon name="document" class="document"> </ion-icon> 
+                                                </label>
+                                    </ion-fab-button>
+                                </ion-fab-list>
+                            </ion-fab>
+
+
+                            <input id="file-input2" class="input" type="file" (change)="Pic($event)" />
+                        </div>
+                    </div>
+
+                    <div class="spinner" *ngIf="((uploadPercent | async ) >0 && (uploadPercent | async ) !='') || (progress>0 && progress !='')">
+                        <ion-spinner name="crescent" color="success"></ion-spinner>
+                    </div>
+                    <br>
+                    <ion-item color="transparent" class="group">
+                        <ion-label position="floating">Name of Spaza</ion-label>
+                        <ion-input type="text" formControlName="Spaza"></ion-input>
+                    </ion-item>
+                    <div *ngIf="form.controls.Spaza.invalid && form.controls.Spaza.dirty">
+                    </div>
+                    <div class="error" *ngIf="form.get('Spaza').hasError('required') && form.get('Spaza').touched">
+                        Please input your Name of your spaza
+                    </div>
+
+                    <ion-item color="transparent" class="group">
+                        <ion-label position="floating">Discription</ion-label>
+                        <ion-textarea type="Discription" formControlName="Discription"></ion-textarea>
+                    </ion-item>
+
+                    <div class="error" *ngIf="form.get('Discription').hasError('required') && form.get('Discription').touched">
+                        Please input your Discription
+                    </div>
+
+                    <ion-item color="transparent" class="group">
+                        <ion-label position="floating">Address</ion-label>
+                        <ion-input type="text" formControlName="Address" (ionInput)="search($event)" [value]="selectedAddress" clearInput></ion-input>
+                    </ion-item>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col>
+
+                                <div style="position: absolute;width: 100%;z-index: 999; ">
+                                    <ion-list lines="none" *ngIf="addresses.length > 0" color="lightb" style="background: var(--ion-item-background,var(--ion-background-color, black)); ">
+
+                                        <ion-item *ngFor="let address of addresses ; let i=index" (click)="onSelect(address, i)" color="dark">
+
+                                            <ion-icon name="pin"></ion-icon>
+                                            <p class="searchv">{{ address}}</p>
+                                        </ion-item>
+
+                                    </ion-list>
+
+                                </div>
+
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+
+
+                    <div *ngIf="form.controls.Address.invalid && form.controls.Address.dirty">
+                    </div>
+                    <div class="error" *ngIf="form.get('Address').hasError('required') && form.get('Address').touched">
+                        Please input your Address
+                    </div>
+                    <!-- <ion-item color="transparent" class="group">
+                    <ion-label position="floating">Phone Number:</ion-label>
+                    <ion-input (ionInput)="search($event)" [value]="selectedAddress"></ion-input>
+                </ion-item> -->
+                    <ion-item color="transparent" class="group">
+                        <ion-label position="floating">Open Hours</ion-label>
+                        <ion-input type="Hours" formControlName="Hours"></ion-input>
+                    </ion-item>
+                    <div *ngIf="form.controls.Hours.invalid && form.controls.Hours.dirty">
+                    </div>
+                    <div class="error" *ngIf="form.get('Hours').hasError('required') && form.get('Hours').touched">
+                        Please input your Open Hours
+                    </div>
+
+                    <ion-item color="transparent" class="group">
+                        <ion-label position="floating">Phone Number</ion-label>
+                        <ion-input type="Number" formControlName="Number" max="10"></ion-input>
+                    </ion-item>
+                    <div *ngIf="form.controls.Number.invalid && form.controls.Number.dirty">
+                    </div>
+                    <div class="error" *ngIf="form.get('Number').hasError('required') && form.get('Number').touched">
+                        Please input your Phone Number
+                    </div>
+                    <div class="error" *ngIf="form.get('Number').hasError('minlength') && form.get('Number').touched">
+                        Minimum 10 Numbers
+                    </div>
+
+                    <div class="error" *ngIf="form.get('Number').hasError('maxlength') && form.get('Number').touched">
+                        Maximum 10 Numbers
+                    </div>
+
+                    <div class="group">
+                        <ion-button expand="block" color="primary" [disabled]="!form.valid" (click)="Submit()">Submit</ion-button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+
+
+    <!-- updateForm -->
+
+
+
+    <!-- {{spaza.Address}} -->
+    <div *ngIf="UpdateForm  =='true'">
+
+        <form [formGroup]="form" class="my-form">
+            <div class="forms">
+                <div class="form">
+                    <br><br>
+                    <div class="profile-image">
+                        <div *ngIf="urlPath =='' ">
+                            <img src="{{photoURL}}">
+                        </div>
+
+                        <div *ngIf="urlPath !='' ">
+                            <img data-src="{{urlPath}}" (click)="zoom(user)">
+                        </div>
+
+                        <div class="image-upload">
+                            <ion-fab horizontal="center" vertical="top" class="fab">
+                                <ion-fab-button color="primary" size="small">
+                                    <ion-icon name="camera" class="input cam"> </ion-icon>
+                                </ion-fab-button>
+                                <ion-fab-list side="start">
+                                    <ion-fab-button color="primary">
+                                        <ion-icon name="camera" (click)="pickImage()" class="camera"> </ion-icon>
+                                    </ion-fab-button>
+
+                                </ion-fab-list>
+
+                                <ion-fab-list side="end">
+                                    <ion-fab-button color="primary">
+                                        <label for="file-input2">
+                                                        <ion-icon name="document"  class="document"> </ion-icon> 
+                                                </label>
+                                    </ion-fab-button>
+                                </ion-fab-list>
+                            </ion-fab>
+
+
+                            <input id="file-input2" class="input" type="file" (change)="Pic($event)" />
+                        </div>
+                    </div>
+
+                    <div class="spinner" *ngIf="((uploadPercent | async ) >0 && (uploadPercent | async ) !='') || (progress>0 && progress !='')">
+                        <ion-spinner name="crescent" color="success"></ion-spinner>
+                    </div>
+                    <br>
+                    <ion-item color="transparent" class="group">
+                        <ion-label position="floating">Name of Spaza</ion-label>
+                        <ion-input type="text" formControlName="Spaza" [value]="spazaName"></ion-input>
+                    </ion-item>
+                    <div *ngIf="form.controls.Spaza.invalid && form.controls.Spaza.dirty">
+                    </div>
+                    <div class="error" *ngIf="form.get('Spaza').hasError('required') && form.get('Spaza').touched">
+                        Please input your Name of your spaza
+                    </div>
+
+                    <ion-item color="transparent" class="group">
+                        <ion-label position="floating">Discription</ion-label>
+                        <ion-textarea type="text" formControlName="Discription" [value]="Discription"></ion-textarea>
+                    </ion-item>
+
+                    <div class="error" *ngIf="form.get('Discription').hasError('required') && form.get('Discription').touched">
+                        Please input your Discription
+                    </div>
+
+                    <ion-item color="transparent" class="group">
+                        <ion-label position="floating">Address</ion-label>
+                        <ion-input type="text" formControlName="Address" (ionInput)="search($event)" [value]="selectedAddress" clearInput></ion-input>
+                    </ion-item>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col>
+
+                                <div style="position: absolute;width: 100%;z-index: 999; ">
+                                    <ion-list lines="none" *ngIf="addresses.length > 0" color="lightb" style="background: var(--ion-item-background,var(--ion-background-color, black)); ">
+
+                                        <ion-item *ngFor="let address of addresses ; let i=index" (click)="onSelect(address, i)" color="dark">
+
+                                            <ion-icon name="pin"></ion-icon>
+                                            <p class="searchv">{{ address}}</p>
+                                        </ion-item>
+
+                                    </ion-list>
+
+                                </div>
+
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+
+
+                    <div *ngIf="form.controls.Address.invalid && form.controls.Address.dirty">
+                    </div>
+                    <div class="error" *ngIf="form.get('Address').hasError('required') && form.get('Address').touched">
+                        Please input your Address
+                    </div>
+                    <!-- <ion-item color="transparent" class="group">
+                    <ion-label position="floating">Phone Number:</ion-label>
+                    <ion-input (ionInput)="search($event)" [value]="selectedAddress"></ion-input>
+                </ion-item> -->
+                    <ion-item color="transparent" class="group">
+                        <ion-label position="floating">Open Hours</ion-label>
+                        <ion-input type="Hours" formControlName="Hours" [value]="Hours"></ion-input>
+                    </ion-item>
+                    <div *ngIf="form.controls.Hours.invalid && form.controls.Hours.dirty">
+                    </div>
+                    <div class="error" *ngIf="form.get('Hours').hasError('required') && form.get('Hours').touched">
+                        Please input your Open Hours
+                    </div>
+
+                    <ion-item color="transparent" class="group">
+                        <ion-label position="floating">Phone Number</ion-label>
+                        <ion-input type="tel" formControlName="Number" [value]="Number"></ion-input>
+                    </ion-item>
+
+                    <div class="error" *ngIf="form.get('Number').hasError('required') && form.get('Number').touched">
+                        Please input your Phone Number
+                    </div>
+                    <div class="error" *ngIf="form.get('Number').hasError('minlength') && form.get('Number').touched">
+                        Minimum 10 Numbers
+                    </div>
+
+                    <div class="error" *ngIf="form.get('Number').hasError('maxlength') && form.get('Number').touched">
+                        Maximum 10 Numbers
+                    </div>
+                    <div class="group">
+                        <ion-button expand="block" color="primary" [disabled]="!form.valid" (click)="update()">Submit</ion-button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- <ion-searchbar (ionInput)="search($event)" [value]="selectedAddress"></ion-searchbar> -->
+
+
+
+    <!-- <ion-list lines="none" *ngIf="addresses.length > 0">
+        <ion-item *ngFor="let album of albums | filtro: textBuscar: 'title'">
+        <ion-item *ngFor="let address of addresses ">
+            <ion-button </ion-button>
+            <ion-label (click)="onSelect(address)">{{address}}</ion-label>
+            <ion-item-option ></ion-item-option>
+        </ion-item>
+    </ion-list> -->
+
+</ion-content>

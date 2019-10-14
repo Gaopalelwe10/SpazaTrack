@@ -1,0 +1,85 @@
+<ion-content class="ion-padding" class="form">
+
+    <form [formGroup]="register" class="my-form">
+        <div class="forms">
+
+            <div class="form">
+                <img src="assets/img/cov.PNG" alt="Avatar" class="imgC">
+
+                <ion-item color="transparent" class="group">
+                    <ion-label position="floating">Username</ion-label>
+                    <ion-input type="text" formControlName="username" required></ion-input>
+                </ion-item>
+                <div class="error" *ngIf="register.get('username').hasError('required') && register.get('username').touched">
+                    Please input your Username
+                </div>
+                <div class="error" *ngIf="register.get('username').hasError('minlength') && register.get('username').touched">
+                    Minimum 4 characters
+                </div>
+                <div class="error" *ngIf="register.get('username').hasError('maxlength') && register.get('username').touched">
+                    Maximum 30 characters
+                </div>
+
+                <ion-item color="transparent" class="group">
+                    <ion-label position="floating">Email</ion-label>
+                    <ion-input type="email" formControlName="email"></ion-input>
+                </ion-item>
+                <div class="error" *ngIf="register.get('email').hasError('required') && register.get('email').touched">
+                    Please input your email
+                </div>
+                <div class="error" *ngIf="register.get('email').hasError('pattern') && register.get('email').touched">
+                    Email address invalid
+                </div>
+
+
+                <ion-item color="transparent" class="group">
+                    <ion-label position="floating">Address</ion-label>
+                    <ion-input type="text" formControlName="address"></ion-input>
+                </ion-item>
+                <div class="error" *ngIf="register.get('address').hasError('required') && register.get('address').touched">
+                    Please input your address
+                </div>
+
+
+                <ion-item color="transparent" class="group">
+                    <ion-label position="floating">Password</ion-label>
+                    <ion-input type="password" formControlName="password"></ion-input>
+                </ion-item>
+                <div class="error" *ngIf="register.get('password').hasError('required') && register.get('password').touched">
+                    Please input your password
+                </div>
+
+                <div class="error" *ngIf="register.get('password').hasError('minlength') && register.get('password').touched">
+                    Minimum 6 characters
+                </div>
+
+                <div class="error" *ngIf="register.get('password').hasError('maxlength') && register.get('password').touched">
+                    Maximum 12 characters
+                </div>
+
+                <ion-item color="transparent" class="group">
+                    <ion-label position="floating">Confirm Password</ion-label>
+                    <ion-input type="password" formControlName="cpassword"></ion-input>
+                </ion-item>
+
+                <div class="error" *ngIf="register.get('cpassword').hasError('required') && register.get('cpassword').touched">
+                    please confirm you passowrd
+                </div>
+
+                <div class="error" *ngIf="register.get('cpassword').hasError('minlength') && register.get('cpassword').touched">
+                    Minimum 6 characters
+                </div>
+
+                <div class="error" *ngIf="register.get('cpassword').hasError('maxlength') && register.get('cpassword').touched">
+                    Maximum 12 characters
+                </div>
+
+                <div class="error" *ngIf="register.get('cpassword').hasError('mustMatch') ">Passwords must match</div>
+                <br>
+                <ion-button expand="block" color="medium" [disabled]="!register.valid" (click)="PersonRegister()">Register</ion-button>
+                <p (click)="login()">Already have account? Sign In</p>
+            </div>
+        </div>
+    </form>
+
+</ion-content>

@@ -1,0 +1,93 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Profile</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list lines="none">
+        <div *ngIf="authService.user  | async as user">
+            <div class="profile-image">
+                <div *ngIf="user.photoURL =='' ">
+                    <img src="/assets/img/avatar.svg">
+
+                </div>
+                <div *ngIf="user.photoURL !='' ">
+                    <img data-src="{{user.photoURL}}" (click)="zoom(user)">
+                    <!-- <div *ngIf="(uploadPercent | async ) >0 && (uploadPercent | async ) !=''"> -->
+
+                </div>
+                <div class="image-upload">
+                    <ion-fab horizontal="center" vertical="top" class="fab">
+                        <ion-fab-button color="primary">
+                            <ion-icon name="camera" class="input"> </ion-icon>
+                        </ion-fab-button>
+
+                        <ion-fab-list side="start">
+                            <ion-fab-button color="primary">
+                                <ion-icon name="camera" (click)="pickImage()" class="camera"> </ion-icon>
+                            </ion-fab-button>
+                        </ion-fab-list>
+
+                        <ion-fab-list side="end">
+                            <ion-fab-button color="primary">
+                                <label for="file-input1">
+                                                        <ion-icon name="document" class="document"> </ion-icon> 
+                                                </label>
+                            </ion-fab-button>
+                        </ion-fab-list>
+
+                    </ion-fab>
+
+
+                    <input id="file-input1" class="input" type="file" (change)="uploadProfilePic($event)" />
+                </div>
+            </div>
+
+            <div class="spinner" *ngIf="((uploadPercent | async ) >0 && (uploadPercent | async ) !='') || (progress>0 && progress !='')">
+                <ion-spinner name="crescent" color="success"></ion-spinner>
+            </div>
+            <br><br><br>
+            <ion-list>
+                <ion-item>
+                    <ion-label>Details</ion-label>
+                </ion-item>
+                <ion-item>
+
+                    <ion-label>{{user.displayName}}</ion-label>
+
+                    <ion-icon name="person" color="primary" slot="start"></ion-icon>
+                    <ion-icon name="create" color="primary" slot="end" (click)=" NameUpdate(user)"></ion-icon>
+                </ion-item>
+
+                <ion-item>
+
+                    <ion-label>{{user.Address}}</ion-label>
+
+                    <ion-icon name="pin" color="primary" slot="start"></ion-icon>
+                    <ion-icon name="create" color="primary" slot="end" (click)="AddressUpdate(user)"></ion-icon>
+                </ion-item>
+                <ion-item>
+                    <ion-label>{{user.Email}}</ion-label>
+                    <ion-icon name="mail" color="primary" slot="start"></ion-icon>
+                </ion-item>
+                <ion-item *ngIf="user.Registered === 'no'" (click)="RegisterSpaza()">
+                    <ion-icon name="arrow-forward" color="primary" slot="end"></ion-icon>
+                    <ion-label>Register SpazaShop</ion-label>
+                    <ion-icon name="paper" color="primary" slot="start"></ion-icon>
+                </ion-item>
+                <ion-item *ngIf="user.Registered === 'yes'" (click)="UpdateSpaza()">
+                    <ion-icon name="arrow-forward" color="primary" slot="end"></ion-icon>
+                    <ion-label>Already Registered update</ion-label>
+                    <ion-icon name="paper" color="primary" slot="start"></ion-icon>
+                </ion-item>
+            </ion-list>
+            <!-- <ion-button expand="full" (click)='update(user)'> Update</ion-button> -->
+        </div>
+    </ion-list>
+
+
+</ion-content>

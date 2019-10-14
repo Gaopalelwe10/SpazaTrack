@@ -1,0 +1,54 @@
+<ion-app>
+    <ion-split-pane>
+        <ion-menu type="overlay">
+            <!-- <ion-header>
+                <ion-toolbar>
+                    <ion-title>Menu</ion-title>
+                </ion-toolbar>
+            </ion-header> -->
+            <ion-content>
+
+                <ion-list>
+                    <div *ngIf="authService.user  | async as user">
+                        <div class="profile-image">
+                            <br>
+                            <div *ngIf="user.photoURL =='' ">
+                                <img src="/assets/img/avatar.svg">
+
+                            </div>
+                            <div *ngIf="user.photoURL !='' ">
+                                <img data-src="{{user.photoURL}}" (click)="zoom(user)">
+                            </div>
+                            <br>
+                            <div class="name">
+                                {{user.displayName}}
+                            </div>
+
+                        </div>
+
+
+                        <br>
+                    </div>
+                    <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+                        <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+                            <ion-icon slot="start" color="primary" [name]="p.icon"></ion-icon>
+                            <ion-label>
+                                {{p.title}}
+                            </ion-label>
+                        </ion-item>
+                    </ion-menu-toggle>
+
+                    <ion-item>
+                        <ion-icon color="primary" slot="start" name="log-out" (click)="log()"></ion-icon>
+                        <ion-label (click)="log()">
+                            Logout
+                        </ion-label>
+                    </ion-item>
+
+
+                </ion-list>
+            </ion-content>
+        </ion-menu>
+        <ion-router-outlet main></ion-router-outlet>
+    </ion-split-pane>
+</ion-app>

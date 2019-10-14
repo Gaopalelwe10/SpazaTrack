@@ -1,0 +1,57 @@
+table {
+    border-collapse: collapse;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+th,
+td {
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+
+th {
+    background-color: rgb(106, 117, 107);
+    color: white;
+}
+
+td {
+    font-size: 2vw;
+}
+
+.padding {
+    padding: 22px;
+}
+
+.spazaName {
+    font-weight: bold;
+}
+
+.card-content-ios,
+.card-content-md {
+    /* padding-left: 20px; */
+    /* padding-right: 20px; */
+    padding-top: 5px;
+    padding-bottom: 5px;
+    /* font-size: 16px; */
+    line-height: 1.1;
+}
+
+.sc-ion-card-md-h,
+.sc-ion-card-ios-h {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.call {
+    float: right;
+    font-size: 20px;
+}
+
+.searchIon {
+    font-size: 25px;
+}
