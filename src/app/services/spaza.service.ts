@@ -6,17 +6,20 @@ import { AngularFireAuth } from '@angular/fire/auth';
   providedIn: 'root'
 })
 export class SpazaService {
-  uid:any;
+  uid: any;
   constructor(public afs: AngularFirestore, public afAuth: AngularFireAuth) {
-    
-   }
 
-  getSpazas(){
+  }
+
+  getSpazas() {
     return this.afs.collection('spazashop').valueChanges();
   }
 
-  updateSpaza(uid){
-     return this.afs.doc<Updatespaza>(`spazashop/${uid}`).valueChanges()
+  updateSpaza(uid) {
+    return this.afs.doc<Updatespaza>(`spazashop/${uid}`).valueChanges()
   }
-  
+
+  search(ev) {
+     console.log("hello" + ev)
+  }
 }

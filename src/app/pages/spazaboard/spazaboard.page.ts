@@ -28,6 +28,7 @@ export class SpazaboardPage implements OnInit {
   initializeItems(): void {
     this.spazalist = this.spazaload;
   }
+  
   filterList(evt) {
     this.initializeItems();
 

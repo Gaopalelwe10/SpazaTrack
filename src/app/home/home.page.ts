@@ -18,7 +18,7 @@ export class HomePage {
   @ViewChild('map', { static: false }) mapNativeElement: ElementRef;
   @ViewChild(IonSlides, { static: false }) slides: IonSlides;
   map: any;
-
+  geocoder: any;
   spazalist;
   spazaload;
 
@@ -26,19 +26,25 @@ export class HomePage {
   originPosition: string;
   destinationPosition: string;
 
-  value;
-  constructor(public menuCtrl: MenuController,
+  value: any;
+
+  constructor(
+    public menuCtrl: MenuController,
     private authService: AuthService,
     public geolocation: Geolocation,
     public spazaService: SpazaService,
-    private route: Router) {
+    private route: Router
+    ) 
+    {
 
     spazaService.getSpazas().subscribe((data) => {
       this.spazalist = data;
       this.spazaload = data;
     })
 
-  }
+    }
+
+
   ionViewWillEnter() {
     this.menuCtrl.enable(true);
   }
@@ -54,8 +60,6 @@ export class HomePage {
   }
 
   initializeMapBox() {
-
-
     // or "const mapboxgl = require('mapbox-gl');"
     mapboxgl.accessToken = 'pk.eyJ1Ijoibm51bnUiLCJhIjoiY2p4cTIxazB3MG0wYTNncm4wanF0cDVjaiJ9.v0khvZZss9z_U2MroA2PVQ';
     const map = new mapboxgl.Map({
@@ -67,28 +71,28 @@ export class HomePage {
     });
 
 
-    const geocoder = new MapboxGeocoder({ // Initialize the geocoder
+    this.geocoder = new MapboxGeocoder({ // Initialize the geocoder
       accessToken: mapboxgl.accessToken, // Set the access token
       mapboxgl: mapboxgl, // Set the mapbox-gl instance
       marker: {
         color: 'orange'
       },
-      placeholder: 'Search for places ', // Placeholder text for the search bar
+      // placeholder: 'Search for places ', // Placeholder text for the search bar
       // Coordinates of UC Berkeley
     });
 
 
-    map.addControl(geocoder)
-    
-    geocoder.on('result', function (ev) {
+    map.addControl(this.geocoder);
+
+    this.geocoder.on('result', (ev)=> {
       console.log(ev.result.text)
       this.value = ev.result.text;
-      this.search();
+      this.search(ev.result.text)
+      console.log("valu ll" + this.value)
       console.log("me")
       // map.getSource('single-point').setData(ev.result.geometry);
-    });
 
-   
+    });
 
     this.geolocation.getCurrentPosition()
       .then((response) => {
@@ -99,6 +103,7 @@ export class HomePage {
           .setLngLat([this.startPosition.longitude, this.startPosition.latitude])
           .addTo(map);
       })
+
 
     // load coodinates from database
     this.spazaService.getSpazas().subscribe((markers: any) => {
@@ -122,10 +127,10 @@ export class HomePage {
   }
 
   search(evt) {
-    console.log("val "+evt)
+    console.log("val " + evt)
     this.initializeItems();
 
-    const searchTerm = evt.srcElement.value;
+    const searchTerm = evt;
 
     if (!searchTerm) {
       return;
