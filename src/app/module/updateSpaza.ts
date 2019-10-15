@@ -6,6 +6,7 @@ interface Updatespaza {
     Address?: string;
     Hours: string;
     Number: string;
+    Close:string
     Discription?: string;
     lng?:number;
     lat?:number;

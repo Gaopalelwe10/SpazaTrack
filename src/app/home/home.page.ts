@@ -96,14 +96,18 @@ export class HomePage {
 
     this.geolocation.getCurrentPosition()
       .then((response) => {
+        
         this.startPosition = response.coords;
+        // this.originPosition= response.Address;
         map.setCenter([this.startPosition.longitude, this.startPosition.latitude]);
 
         var marker = new mapboxgl.Marker()
           .setLngLat([this.startPosition.longitude, this.startPosition.latitude])
+          .setPopup(new mapboxgl.Popup({ offset: 25 }) 
+          .setHTML('<p>' + this.startPosition.Address + '</p> <p>Spaza Name: ' + + '</p>'))
           .addTo(map);
       })
-
+      Address:
 
     // load coodinates from database
     this.spazaService.getSpazas().subscribe((markers: any) => {
@@ -124,6 +128,7 @@ export class HomePage {
       });
     })
 
+    
   }
 
   search(evt) {

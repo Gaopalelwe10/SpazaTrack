@@ -11,6 +11,7 @@ import { IfStmt } from '@angular/compiler';
 import { auth } from 'firebase';
 import { AuthService } from 'src/app/services/auth.service';
 import { SpazaService } from 'src/app/services/spaza.service';
+import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-spazaform',
@@ -58,7 +59,7 @@ export class SpazaformPage implements OnInit {
   Hours: string;
   Number: string;
   Discription: string;
-
+  Close:string;
   constructor(private fb: FormBuilder,
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
@@ -85,6 +86,7 @@ export class SpazaformPage implements OnInit {
       Discription: ['', Validators.required],
       Address: ['', Validators.required],
       Hours: ['', Validators.required],
+      Close:['', Validators.required],
       Number: ['', Validators.compose([Validators.minLength(10), Validators.maxLength(10), Validators.required])],
     });
 
@@ -109,6 +111,7 @@ export class SpazaformPage implements OnInit {
         this.spazaName = data.spazaName;
         this.Discription = data.Discription;
         this.Hours = data.Hours;
+        this.Close=data.Close;
         this.lat = data.lat;
         this.lng = data.lng;
       })
@@ -181,7 +184,7 @@ export class SpazaformPage implements OnInit {
     // });
     this.addresses = [];
   }
-  Submit() {
+  Register() {
     this.afs.collection('spazashop').doc(this.uid).set({
       spazaName: this.form.value.Spaza,
       uid: this.uid,
@@ -189,6 +192,7 @@ export class SpazaformPage implements OnInit {
       Discription: this.form.value.Discription,
       Address: this.form.value.Address,
       Hours: this.form.value.Hours,
+      Close:this.form.value.Close,
       Number: this.form.value.Number,
       photoURL: this.urlPath,
       Registered: "yes",
@@ -206,7 +210,7 @@ export class SpazaformPage implements OnInit {
     this.urlPath = "";
   }
 
-  update() {
+  Update() {
 
   }
 }

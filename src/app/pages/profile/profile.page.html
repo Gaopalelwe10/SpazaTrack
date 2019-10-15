@@ -47,7 +47,7 @@
                 </div>
             </div>
 
-            <div class="spinner" *ngIf="((uploadPercent | async ) >0 && (uploadPercent | async ) !='') || (progress>0 && progress !='')">
+            <div class="spinner" *ngIf="((uploadPercent  ) >0 && (uploadPercent ) !=100) || (progress>0 && progress !=100)">
                 <ion-spinner name="crescent" color="success"></ion-spinner>
             </div>
             <br><br><br>

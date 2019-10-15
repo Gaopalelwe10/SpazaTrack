@@ -78,26 +78,22 @@
                         <ion-label position="floating">Address</ion-label>
                         <ion-input type="text" formControlName="Address" (ionInput)="search($event)" [value]="selectedAddress" clearInput></ion-input>
                     </ion-item>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col>
 
-                                <div style="position: absolute;width: 100%;z-index: 999; ">
-                                    <ion-list lines="none" *ngIf="addresses.length > 0" color="lightb" style="background: var(--ion-item-background,var(--ion-background-color, black)); ">
 
-                                        <ion-item *ngFor="let address of addresses ; let i=index" (click)="onSelect(address, i)" color="dark">
+                    <div style="position: absolute;width: 100%;z-index: 999; ">
+                        <ion-list lines="none" *ngIf="addresses.length > 0" color="lightb" style="background: var(--ion-item-background,var(--ion-background-color, black)); ">
 
-                                            <ion-icon name="pin"></ion-icon>
-                                            <p class="searchv">{{ address}}</p>
-                                        </ion-item>
+                            <ion-item *ngFor="let address of addresses ; let i=index" (click)="onSelect(address, i)" color="dark">
 
-                                    </ion-list>
+                                <ion-icon name="pin"></ion-icon>
+                                <p class="searchv">{{ address}}</p>
+                            </ion-item>
 
-                                </div>
+                        </ion-list>
 
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
+                    </div>
+
+
 
 
                     <div *ngIf="form.controls.Address.invalid && form.controls.Address.dirty">
@@ -109,15 +105,32 @@
                     <ion-label position="floating">Phone Number:</ion-label>
                     <ion-input (ionInput)="search($event)" [value]="selectedAddress"></ion-input>
                 </ion-item> -->
-                    <ion-item color="transparent" class="group">
-                        <ion-label position="floating">Open Hours</ion-label>
-                        <ion-input type="Hours" formControlName="Hours"></ion-input>
-                    </ion-item>
-                    <div *ngIf="form.controls.Hours.invalid && form.controls.Hours.dirty">
-                    </div>
-                    <div class="error" *ngIf="form.get('Hours').hasError('required') && form.get('Hours').touched">
-                        Please input your Open Hours
-                    </div>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col>
+                                <ion-item color="transparent" class="group">
+                                    <ion-label position="floating">Open Time</ion-label>
+                                    <ion-datetime formControlName="Hours" displayFormat="h:mm a"></ion-datetime>
+                                </ion-item>
+                                <div *ngIf="form.controls.Hours.invalid && form.controls.Hours.dirty">
+                                </div>
+                                <div class="error" *ngIf="form.get('Hours').hasError('required') && form.get('Hours').touched">
+                                    Please input your Open Hour
+                                </div>
+                            </ion-col>
+                            <ion-col>
+                                <ion-item color="transparent" class="group">
+                                    <ion-label position="floating">Close Time</ion-label>
+                                    <ion-datetime formControlName="Close" displayFormat="h:mm a"></ion-datetime>
+                                </ion-item>
+                                <div *ngIf="form.controls.Close.invalid && form.controls.Hours.Close">
+                                </div>
+                                <div class="error" *ngIf="form.get('Close').hasError('required') && form.get('Close').touched">
+                                    Please input your Close Hour
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
 
                     <ion-item color="transparent" class="group">
                         <ion-label position="floating">Phone Number</ion-label>
@@ -137,7 +150,7 @@
                     </div>
 
                     <div class="group">
-                        <ion-button expand="block" color="primary" [disabled]="!form.valid" (click)="Submit()">Submit</ion-button>
+                        <ion-button expand="block" color="primary" [disabled]="!form.valid" (click)="Register()">Register</ion-button>
                     </div>
                 </div>
             </div>
@@ -220,26 +233,22 @@
                         <ion-label position="floating">Address</ion-label>
                         <ion-input type="text" formControlName="Address" (ionInput)="search($event)" [value]="selectedAddress" clearInput></ion-input>
                     </ion-item>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col>
 
-                                <div style="position: absolute;width: 100%;z-index: 999; ">
-                                    <ion-list lines="none" *ngIf="addresses.length > 0" color="lightb" style="background: var(--ion-item-background,var(--ion-background-color, black)); ">
 
-                                        <ion-item *ngFor="let address of addresses ; let i=index" (click)="onSelect(address, i)" color="dark">
+                    <div style="position: absolute;width: 100%;z-index: 999; ">
+                        <ion-list lines="none" *ngIf="addresses.length > 0" color="lightb" style="background: var(--ion-item-background,var(--ion-background-color, black)); ">
 
-                                            <ion-icon name="pin"></ion-icon>
-                                            <p class="searchv">{{ address}}</p>
-                                        </ion-item>
+                            <ion-item *ngFor="let address of addresses ; let i=index" (click)="onSelect(address, i)" color="dark">
 
-                                    </ion-list>
+                                <ion-icon name="pin"></ion-icon>
+                                <p class="searchv">{{ address}}</p>
+                            </ion-item>
 
-                                </div>
+                        </ion-list>
 
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
+                    </div>
+
+
 
 
                     <div *ngIf="form.controls.Address.invalid && form.controls.Address.dirty">
@@ -251,16 +260,33 @@
                     <ion-label position="floating">Phone Number:</ion-label>
                     <ion-input (ionInput)="search($event)" [value]="selectedAddress"></ion-input>
                 </ion-item> -->
-                    <ion-item color="transparent" class="group">
-                        <ion-label position="floating">Open Hours</ion-label>
-                        <ion-input type="Hours" formControlName="Hours" [value]="Hours"></ion-input>
-                    </ion-item>
-                    <div *ngIf="form.controls.Hours.invalid && form.controls.Hours.dirty">
-                    </div>
-                    <div class="error" *ngIf="form.get('Hours').hasError('required') && form.get('Hours').touched">
-                        Please input your Open Hours
-                    </div>
 
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col>
+                                <ion-item color="transparent" class="group">
+                                    <ion-label position="floating">Open Time</ion-label>
+                                    <ion-datetime formControlName="Hours" [value]="Hours" displayFormat="h:mm a"></ion-datetime>
+                                </ion-item>
+                                <div *ngIf="form.controls.Hours.invalid && form.controls.Hours.dirty">
+                                </div>
+                                <div class="error" *ngIf="form.get('Hours').hasError('required') && form.get('Hours').touched">
+                                    Please input your Open Hour
+                                </div>
+                            </ion-col>
+                            <ion-col>
+                                <ion-item color="transparent" class="group">
+                                    <ion-label position="floating">Close Time</ion-label>
+                                    <ion-datetime formControlName="Close" [value]="Close" displayFormat="h:mm a"></ion-datetime>
+                                </ion-item>
+                                <div *ngIf="form.controls.Close.invalid && form.controls.Hours.Close">
+                                </div>
+                                <div class="error" *ngIf="form.get('Close').hasError('required') && form.get('Close').touched">
+                                    Please input your Close Hour
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
                     <ion-item color="transparent" class="group">
                         <ion-label position="floating">Phone Number</ion-label>
                         <ion-input type="tel" formControlName="Number" [value]="Number"></ion-input>
@@ -277,7 +303,7 @@
                         Maximum 10 Numbers
                     </div>
                     <div class="group">
-                        <ion-button expand="block" color="primary" [disabled]="!form.valid" (click)="update()">Submit</ion-button>
+                        <ion-button expand="block" color="primary" [disabled]="!form.valid" (click)="update()">Update</ion-button>
                     </div>
                 </div>
             </div>

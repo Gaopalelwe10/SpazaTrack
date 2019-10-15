@@ -5,6 +5,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { AlertController, NavController } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -18,7 +19,7 @@ export class ProfilePage implements OnInit {
   sub
   username: string;
   photoURL: string;
-
+  uploadPercent: number;
   constructor(
     private authService: AuthService,
     private Viewer: PhotoViewer,
@@ -124,6 +125,16 @@ export class ProfilePage implements OnInit {
 
   ico() {
     this.route.navigateByUrl("home");
+  }
+  uploadProfilePic(event){
+    this.authService.uploadProfilePic(event).subscribe((data:number)=>{
+      this.uploadPercent=data
+      console.log(this.uploadPercent)
+    })
+  }
+
+  pickImage(){
+    this.authService.pickImage();
   }
 }
 
