@@ -18,7 +18,8 @@
 </ion-header>
 
 <ion-content>
-    <ion-card color="lightb" *ngFor="let spaza of spazalist">
+    <br>
+    <ion-card color="lightb" *ngFor="let spaza of spazalist" (click)="comment(spaza)">
         <ion-card-content>
             <p class="spazaName">
                 {{spaza.spazaName}}

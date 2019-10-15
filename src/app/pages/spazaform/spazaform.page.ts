@@ -194,6 +194,7 @@ export class SpazaformPage implements OnInit {
       Registered: "yes",
       lat: this.lat,
       lng: this.lng,
+      commentCount: 0,
     }).then(() => {
       this.authService.updateRegistered(this.uid, "yes").then(() => {
         this.route.navigateByUrl("spazaboard")

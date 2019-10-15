@@ -4,7 +4,7 @@
         <div class="forms">
 
             <div class="form">
-                <img src="assets/img/cov.PNG" alt="Avatar" class="imgC">
+                <img src="assets/img/1.PNG" alt="Avatar" class="imgC">
 
                 <ion-item color="transparent" class="group">
                     <ion-label position="floating">Username</ion-label>
@@ -76,7 +76,7 @@
 
                 <div class="error" *ngIf="register.get('cpassword').hasError('mustMatch') ">Passwords must match</div>
                 <br>
-                <ion-button expand="block" color="medium" [disabled]="!register.valid" (click)="PersonRegister()">Register</ion-button>
+                <ion-button expand="block" color="primary" [disabled]="!register.valid" (click)="PersonRegister()">Register</ion-button>
                 <p (click)="login()">Already have account? Sign In</p>
             </div>
         </div>

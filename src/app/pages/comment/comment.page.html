@@ -11,7 +11,7 @@
 
 <ion-content>
     <div *ngIf="spaza$ | async as spaza">
-        <ion-card color="lightb">
+        <ion-card class="welcome-card" color="lightb">
             <img src="{{spaza.photoURL}}">
             <!-- <ion-card-header>
 
@@ -20,7 +20,7 @@
             <ion-card-content>
 
                 <p>
-                    <ion-icon name="information" slot="start" color="primary"></ion-icon>{{ spaza.Discription }}
+                    {{ spaza.Discription }}
                 </p>
                 <br>
                 <p>
@@ -142,7 +142,8 @@
             </div>
         </div>
 
-        <ion-button (click)="loadMore()">
+
+        <ion-button expand="full" color="primary" (click)="loadMore()" *ngIf="spaza.commentCount  > 5" padding>
 
             Load all {{ spaza.commentCount }} comments
         </ion-button>
@@ -152,5 +153,5 @@
     </div>
 
 
-
+    <br>
 </ion-content>

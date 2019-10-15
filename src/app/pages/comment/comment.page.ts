@@ -31,7 +31,7 @@ export class CommentPage implements OnInit {
     private authService: AuthService) {
 
     this.uid = this.afAuth.auth.currentUser.uid;
-
+  
   }
 
   ngOnInit() {
@@ -49,6 +49,7 @@ export class CommentPage implements OnInit {
     this.commentsRef = this.spazaRef.collection('comments', ref => ref.orderBy('createdAt', 'desc'))
     this.spaza$ = this.spazaRef.valueChanges();
     this.users = this.afs.collection('users').valueChanges();
+   
   }
   onModelChange(ev) {
     console.log(this.rate)

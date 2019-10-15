@@ -52,3 +52,11 @@
 .mapboxgl-ctrl-geocoder {
     min-width: 100%;
 }
+
+.marker {
+    display: block;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+}

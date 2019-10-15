@@ -78,7 +78,7 @@ export class ProfilePage implements OnInit {
   }
   async AddressUpdate(user) {
     const alert = await this.alertCtrl.create({
-      subHeader: 'Add/Edit Name',
+      subHeader: 'Add/Edit Address',
       inputs: [
 
         {

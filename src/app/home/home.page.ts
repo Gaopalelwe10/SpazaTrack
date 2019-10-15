@@ -1,10 +1,13 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, IonSlides } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { SpazaService } from '../services/spaza.service';
+
+import { database } from 'firebase';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -12,14 +15,30 @@ import { SpazaService } from '../services/spaza.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  @ViewChild('map', { static: false }) mapNativeElement: ElementRef
+  @ViewChild('map', { static: false }) mapNativeElement: ElementRef;
+  @ViewChild(IonSlides, { static: false }) slides: IonSlides;
   map: any;
+
+  spazalist;
+  spazaload;
 
   startPosition: any;
   originPosition: string;
   destinationPosition: string;
 
-  constructor(public menuCtrl: MenuController, private authService: AuthService, public geolocation: Geolocation, public spazaService: SpazaService) { }
+  value;
+  constructor(public menuCtrl: MenuController,
+    private authService: AuthService,
+    public geolocation: Geolocation,
+    public spazaService: SpazaService,
+    private route: Router) {
+
+    spazaService.getSpazas().subscribe((data) => {
+      this.spazalist = data;
+      this.spazaload = data;
+    })
+
+  }
   ionViewWillEnter() {
     this.menuCtrl.enable(true);
   }
@@ -27,7 +46,11 @@ export class HomePage {
 
   ionViewDidEnter() {
     this.initializeMapBox();
-    // this.loadAllmakers();
+    this.slideChanged();
+  }
+
+  initializeItems(): void {
+    this.spazalist = this.spazaload;
   }
 
   initializeMapBox() {
@@ -43,15 +66,6 @@ export class HomePage {
       center: [28.218370, -25.731340]
     });
 
-    // map.addControl(new MapboxGeocoder({
-    //   accessToken: mapboxgl.accessToken,
-    //   marker: {
-    //     color: 'orange'
-    //   },
-    //   mapboxgl: mapboxgl,
-
-    // }));
-
 
     const geocoder = new MapboxGeocoder({ // Initialize the geocoder
       accessToken: mapboxgl.accessToken, // Set the access token
@@ -62,19 +76,19 @@ export class HomePage {
       placeholder: 'Search for places ', // Placeholder text for the search bar
       // Coordinates of UC Berkeley
     });
-    // map.addControl(new MapboxGeocoder({
-    //   accessToken: mapboxgl.accessToken,
-    //   marker: {
-    //     color: 'orange'
-    //   },
-    //   mapboxgl: mapboxgl,
-    // }));
+
+
     map.addControl(geocoder)
+    
     geocoder.on('result', function (ev) {
-      console.log(ev.result.place_name)
+      console.log(ev.result.text)
+      this.value = ev.result.text;
+      this.search();
       console.log("me")
       // map.getSource('single-point').setData(ev.result.geometry);
     });
+
+   
 
     this.geolocation.getCurrentPosition()
       .then((response) => {
@@ -85,26 +99,55 @@ export class HomePage {
           .setLngLat([this.startPosition.longitude, this.startPosition.latitude])
           .addTo(map);
       })
+
+    // load coodinates from database
     this.spazaService.getSpazas().subscribe((markers: any) => {
       markers.forEach(element => {
 
-        // map.setCenter([element.lng, element.lat]);
+        const el = document.createElement('div');
+        el.className = 'marker';
+        el.style.backgroundImage = 'url(assets/img/icons8.png)';
+        el.style.width = '40px';
+        el.style.height = '40px';
+
         console.log(element.lng, element.lat)
-        var marker = new mapboxgl.Marker()
+        var marker = new mapboxgl.Marker(el)
           .setLngLat([element.lng, element.lat])
+          .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+            .setHTML('<p>' + element.Address + '</p> <p>Spaza Name: ' + element.spazaName + '</p>'))
           .addTo(map);
       });
     })
 
   }
-  loadAllmakers() {
-    this.spazaService.getSpazas().subscribe((markers: any) => {
-      markers.forEach(element => {
-        console.log(element.lng, element.lat)
-        var marker = new mapboxgl.Marker()
-          .setLngLat([element.lng, element.lat])
-          .addTo(this.map);
-      });
-    })
+
+  search(evt) {
+    console.log("val "+evt)
+    this.initializeItems();
+
+    const searchTerm = evt.srcElement.value;
+
+    if (!searchTerm) {
+      return;
+    }
+
+    this.spazalist = this.spazalist.filter(currentSpaza => {
+      if ((currentSpaza.spazaName && searchTerm) || (currentSpaza.Address && searchTerm)) {
+        if ((currentSpaza.spazaName.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) || (currentSpaza.Address.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1)) {
+          return true;
+        }
+        return false;
+      }
+    });
+
+  }
+
+  comment(spaza) {
+    this.route.navigate(['/comment'], { queryParams: { spazauid: spaza.uid, spazaName: spaza.spazaName } });
+  }
+
+
+  slideChanged() {
+    this.slides.startAutoplay();
   }
 }

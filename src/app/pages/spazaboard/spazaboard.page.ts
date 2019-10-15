@@ -24,6 +24,7 @@ export class SpazaboardPage implements OnInit {
 
   ngOnInit() {
   }
+  
   initializeItems(): void {
     this.spazalist = this.spazaload;
   }
