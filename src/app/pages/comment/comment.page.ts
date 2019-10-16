@@ -23,7 +23,8 @@ export class CommentPage implements OnInit {
   spazaName: string;
   uid: any;
   users: any;
-
+  tellus;
+  isRate:boolean=false;
   constructor(
     private afs: AngularFirestore,
     private route: ActivatedRoute,
@@ -52,10 +53,19 @@ export class CommentPage implements OnInit {
    
   }
   onModelChange(ev) {
+    this.isRate=true;
     console.log(this.rate)
+    if(this.rate== 3){
+      this.tellus="Tell others why this place was okay";
+    }else if(this.rate >3 && this.rate<=5){
+      this.tellus="Tell others why you liked this place ";
+    }else{
+      this.tellus="Tell others why you disliked this place ";
+    }
   }
 
   addComment() {
+    this.isRate=false;
     this.commentsRef.add({ content: this.text, rate: this.rate, createdAt: Date.now(), uid: this.uid })
     this.text = '';
     this.rate = 0

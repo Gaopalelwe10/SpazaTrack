@@ -1,9 +1,17 @@
 ion-textarea {
-    border: 2px solid black !important;
-    border-radius: 25px;
+    // border: 2px solid black !important;
+    // border-radius: 25px;
 }
 
 .welcome-card img {
     max-height: 35vh;
     overflow: hidden;
+}
+
+.center {
+    text-align: center;
+}
+
+.gray {
+    color: rgb(187, 186, 186);
 }

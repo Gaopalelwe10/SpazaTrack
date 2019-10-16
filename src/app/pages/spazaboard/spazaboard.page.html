@@ -1,19 +1,18 @@
 <ion-header>
     <ion-toolbar color="primary">
+
         <ion-buttons slot="start" *ngIf="!isSearchbar">
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
 
         <ion-title *ngIf="!isSearchbar">Spazaboard</ion-title>
 
-
-        <ion-buttons>
-            <ion-searchbar showCancelButton="always" (ionCancel)="isSearchbar=false" *ngIf="isSearchbar" (ionInput)="filterList($event)"></ion-searchbar>
-        </ion-buttons>
+        <ion-searchbar showCancelButton="always" (ionCancel)="isSearchbar=false" *ngIf="isSearchbar" (ionInput)="filterList($event)"></ion-searchbar>
 
         <ion-buttons slot="end" (click)="isSearchbar= true" *ngIf="!isSearchbar">
             <ion-icon name="search" slot="end" class="searchIon"></ion-icon>
         </ion-buttons>
+
     </ion-toolbar>
 </ion-header>
 
@@ -36,7 +35,7 @@
             </p>
             <p class="font">
                 {{spaza.Hours}}
-                <ion-icon name="call" slot="end" class="call" color="primary">Call</ion-icon>
+                <!-- <ion-icon name="call" slot="end" class="call" color="primary"></ion-icon> -->
             </p>
         </ion-card-content>
     </ion-card>

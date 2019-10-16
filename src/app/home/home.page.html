@@ -14,43 +14,46 @@
 
     <div class="bot">
 
+        <div class="arrow">
+            <ion-icon color="primary" name="arrow-dropdown" (click)="isSlide=false" *ngIf="isSlide"></ion-icon>
+            <ion-icon color="primary" name="arrow-dropup" (click)="isSlide=true" *ngIf="!isSlide"></ion-icon>
+        </div>
 
-        <ion-slides startAutoplay>
-            <ion-slide *ngFor="let spaza of spazalist" (click)="comment(spaza)">
-
-
-                <ion-card color="tertiary">
-
-                    <ion-card-content>
-                        <p class="spazaName">
-                            {{spaza.spazaName}}
-                        </p>
-                        <p class="font" *ngIf="!spaza.commentCount">
-                            No review
-                        </p>
-                        <p class="font" *ngIf="spaza.commentCount > 0">
-                            {{spaza.commentCount}} review
-                        </p>
-
-                        <p class="font">
-                            {{spaza.Address}}
-                        </p>
-                        <p class="font">
-                            {{spaza.Hours}}
-                            <ion-icon name="call" slot="end" class="call" color="primary">Call</ion-icon>
-                        </p>
-                    </ion-card-content>
-                </ion-card>
+        <div *ngIf="isSlide">
 
 
-            </ion-slide>
-            <ion-slide>
+            <ion-slides startAutoplay>
+
+                <ion-slide *ngFor="let spaza of spazalist" (click)="comment(spaza)">
 
 
+                    <ion-card>
 
-            </ion-slide>
-        </ion-slides>
+                        <ion-card-content>
+                            <p class="spazaName">
+                                {{spaza.spazaName}}
+                            </p>
+                            <p class="font" *ngIf="!spaza.commentCount">
+                                No review
+                            </p>
+                            <p class="font" *ngIf="spaza.commentCount > 0">
+                                {{spaza.commentCount}} review
+                            </p>
 
+                            <p class="font">
+                                {{spaza.Address}}
+                            </p>
+                            <p class="font">
+                                {{spaza.Hours}}
+                                <ion-icon name="call" slot="end" class="call" color="primary"></ion-icon>
+                            </p>
+                        </ion-card-content>
+                    </ion-card>
+
+
+                </ion-slide>
+            </ion-slides>
+        </div>
     </div>
     <!-- <div class="bot">
         <ion-slides pager>

@@ -15,7 +15,7 @@ input {
 
 .bot {
     position: absolute;
-    bottom: 30px;
+    bottom: 20px;
     width: 100%;
 }
 
@@ -25,4 +25,27 @@ p {
 
 ion-card {
     width: 90% !important;
+    background: #20727de1 !important;
+    color: white;
+}
+
+.card-content-ios,
+.card-content-md {
+    /* padding-left: 20px; */
+    /* padding-right: 20px; */
+    padding-top: 5px;
+    padding-bottom: 5px;
+    /* font-size: 16px; */
+    line-height: 1.1;
+}
+
+.sc-ion-card-md-h,
+.sc-ion-card-ios-h {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.arrow {
+    text-align: center;
+    font-size: 30px;
 }

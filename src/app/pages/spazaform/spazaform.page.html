@@ -1,5 +1,5 @@
 <ion-header no-border no-shadow>
-    <ion-toolbar>
+    <ion-toolbar color="primary">
         <ion-buttons slot="start">
             <ion-back-button></ion-back-button>
         </ion-buttons>
@@ -15,7 +15,7 @@
             <div class="forms">
 
                 <div class="form">
-                    <br><br>
+                    <br><br><br>
                     <div class="profile-image">
                         <div *ngIf="urlPath =='' ">
                             <img src="/assets/img/avatar.svg">
@@ -160,17 +160,17 @@
 
 
 
-    <!-- updateForm -->
+    <!-- /////////////////////////////////////////////////////////////////////////////////// updateForm //////////////////////////////////////////////////////////// -->
 
 
 
-    <!-- {{spaza.Address}} -->
+
     <div *ngIf="UpdateForm  =='true'">
 
         <form [formGroup]="form" class="my-form">
             <div class="forms">
                 <div class="form">
-                    <br><br>
+                    <br><br><br>
                     <div class="profile-image">
                         <div *ngIf="urlPath =='' ">
                             <img src="{{photoURL}}">

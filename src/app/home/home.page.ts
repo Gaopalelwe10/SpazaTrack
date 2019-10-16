@@ -27,7 +27,7 @@ export class HomePage {
   destinationPosition: string;
 
   value: any;
-
+  isSlide :boolean =true;
   constructor(
     public menuCtrl: MenuController,
     private authService: AuthService,
@@ -104,10 +104,10 @@ export class HomePage {
         var marker = new mapboxgl.Marker()
           .setLngLat([this.startPosition.longitude, this.startPosition.latitude])
           .setPopup(new mapboxgl.Popup({ offset: 25 }) 
-          .setHTML('<p>' + this.startPosition.Address + '</p> <p>Spaza Name: ' + + '</p>'))
+          .setHTML('<p>' + this.startPosition.Address + '</p> '))
           .addTo(map);
       })
-      Address:
+   
 
     // load coodinates from database
     this.spazaService.getSpazas().subscribe((markers: any) => {

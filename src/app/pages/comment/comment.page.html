@@ -39,14 +39,16 @@
             </ion-card-content>
         </ion-card>
 
-        <ion-item>
-            <ion-label>Rate Spaza</ion-label>
+
+        <p class="center">Rate and Review</p>
+        <p class="center">
             <ionic4-star-rating [(ngModel)]="rate" activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#ffb400 " defaultColor="gray" readonly="false" fontSize="20px" (ratingChanged)="onModelChange($event)">
             </ionic4-star-rating>
-        </ion-item>
-        <ion-item>
+        </p>
+        <p class="center gray" *ngIf="!isRate">Share your experience to help other</p>
 
-            <ion-textarea [(ngModel)]="text" (keyup.enter)="addComment()" placeholder="Add a comment"></ion-textarea>
+        <ion-item *ngIf="isRate">
+            <ion-textarea [(ngModel)]="text" (keyup.enter)="addComment()" placeholder="{{tellus}}"></ion-textarea>
         </ion-item>
 
 
@@ -88,28 +90,6 @@
             </div>
         </ng-container>
 
-        <!-- Firestore comment documents from the subcollection -->
-        <!-- <div *ngFor="let comment of comments$ | async">
-            <ion-card>
-                <ion-item>
-                    <ion-avatar slot="start">
-                        <img src="/assets/img/avatar.svg">
-                    </ion-avatar>
-                    <ion-label>
-                        <h2>Finn</h2>
-                        <h3>
-                           
-                            <ionic4-star-rating [(ngModel)]="comment.rate" activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#ffb400 " defaultColor="gray" readonly="true" fontSize="10px">
-                            </ionic4-star-rating>
-                        </h3>
-                    </ion-label>
-                </ion-item>
-                <ion-card-content>
-                    <p color="light">{{ comment.createdAt |date: 'medium' }}</p>
-                    <h5>{{ comment.content }}</h5>
-                </ion-card-content>
-            </ion-card>
-        </div> -->
 
         <!-- Firestore comment documents from the subcollection -->
         <div *ngFor="let comment of comments$ | async">
