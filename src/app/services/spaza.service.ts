@@ -22,4 +22,14 @@ export class SpazaService {
   search(ev) {
      console.log("hello" + ev)
   }
+
+  deleteComment(Suid, Cuid){
+    return this.afs.collection('spazashop').doc(Suid).collection('comments').doc(Cuid).delete();
+  }
+  updateComment(Suid, Cuid, text, rate){
+    return this.afs.collection('spazashop').doc(Suid).collection('comments').doc(Cuid).update({
+      content:text,
+      rate:rate,
+    });
+  }
 }

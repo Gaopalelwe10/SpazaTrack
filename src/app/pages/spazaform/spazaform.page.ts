@@ -44,7 +44,7 @@ export class SpazaformPage implements OnInit {
   date = this.today.getDate() + "" + (this.today.getMonth() + 1) + "" + this.today.getFullYear();
   time = this.today.getHours() + "" + this.today.getMinutes();
   dateTime = this.date + "" + this.time;
-  
+
   urlPath: any = '';
   list: any;
 
@@ -59,7 +59,8 @@ export class SpazaformPage implements OnInit {
   Hours: string;
   Number: string;
   Discription: string;
-  Close:string;
+  Close: string;
+
   constructor(private fb: FormBuilder,
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
@@ -86,7 +87,7 @@ export class SpazaformPage implements OnInit {
       Discription: ['', Validators.required],
       Address: ['', Validators.required],
       Hours: ['', Validators.required],
-      Close:['', Validators.required],
+      Close: ['', Validators.required],
       Number: ['', Validators.compose([Validators.minLength(10), Validators.maxLength(10), Validators.required])],
     });
 
@@ -111,9 +112,10 @@ export class SpazaformPage implements OnInit {
         this.spazaName = data.spazaName;
         this.Discription = data.Discription;
         this.Hours = data.Hours;
-        this.Close=data.Close;
+        this.Close = data.Close;
         this.lat = data.lat;
         this.lng = data.lng;
+        this.urlPath=data.photoURL;
       })
     }
 
@@ -192,7 +194,7 @@ export class SpazaformPage implements OnInit {
       Discription: this.form.value.Discription,
       Address: this.form.value.Address,
       Hours: this.form.value.Hours,
-      Close:this.form.value.Close,
+      Close: this.form.value.Close,
       Number: this.form.value.Number,
       photoURL: this.urlPath,
       Registered: "yes",
@@ -210,7 +212,27 @@ export class SpazaformPage implements OnInit {
     this.urlPath = "";
   }
 
-  Update() {
+  update() {
+    this.afs.collection('spazashop').doc(this.uid).update({
+      spazaName: this.form.value.Spaza,
+      uid: this.uid,
+      Discription: this.form.value.Discription,
+      Address: this.form.value.Address,
+      Hours: this.form.value.Hours,
+      Close: this.form.value.Close,
+      Number: this.form.value.Number,
+      photoURL: this.urlPath,
+      lat: this.lat,
+      lng: this.lng,
+     
+    }).then(() => {
+      console.log("updated")
+      this.route.navigateByUrl("spazaboard")
 
+
+    }).catch(err => {
+      alert(err.message)
+    })
+    this.urlPath = "";
   }
 }

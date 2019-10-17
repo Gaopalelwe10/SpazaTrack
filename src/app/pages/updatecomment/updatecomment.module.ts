@@ -5,14 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { CommentPage } from './comment.page';
+import { UpdatecommentPage } from './updatecomment.page';
 import { SharedModule } from 'src/app/shared/shared/shared.module';
-
 
 const routes: Routes = [
   {
     path: '',
-    component: CommentPage
+    component: UpdatecommentPage
   }
 ];
 
@@ -24,9 +23,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ReactiveFormsModule,
     SharedModule,
-    
   ],
-  exports: [],
-  declarations: [CommentPage]
+  declarations: [UpdatecommentPage]
 })
-export class CommentPageModule {}
+export class UpdatecommentPageModule {}

@@ -110,7 +110,7 @@
                             <ion-col>
                                 <ion-item color="transparent" class="group">
                                     <ion-label position="floating">Open Time</ion-label>
-                                    <ion-datetime formControlName="Hours" displayFormat="h:mm a"></ion-datetime>
+                                    <ion-datetime formControlName="Hours" displayFormat="H:mm a"></ion-datetime>
                                 </ion-item>
                                 <div *ngIf="form.controls.Hours.invalid && form.controls.Hours.dirty">
                                 </div>
@@ -121,7 +121,7 @@
                             <ion-col>
                                 <ion-item color="transparent" class="group">
                                     <ion-label position="floating">Close Time</ion-label>
-                                    <ion-datetime formControlName="Close" displayFormat="h:mm a"></ion-datetime>
+                                    <ion-datetime formControlName="Close" displayFormat="H:mm a"></ion-datetime>
                                 </ion-item>
                                 <div *ngIf="form.controls.Close.invalid && form.controls.Hours.Close">
                                 </div>
@@ -266,7 +266,7 @@
                             <ion-col>
                                 <ion-item color="transparent" class="group">
                                     <ion-label position="floating">Open Time</ion-label>
-                                    <ion-datetime formControlName="Hours" [value]="Hours" displayFormat="h:mm a"></ion-datetime>
+                                    <ion-datetime formControlName="Hours" [value]="Hours" displayFormat="H:mm a"></ion-datetime>
                                 </ion-item>
                                 <div *ngIf="form.controls.Hours.invalid && form.controls.Hours.dirty">
                                 </div>
@@ -277,7 +277,7 @@
                             <ion-col>
                                 <ion-item color="transparent" class="group">
                                     <ion-label position="floating">Close Time</ion-label>
-                                    <ion-datetime formControlName="Close" [value]="Close" displayFormat="h:mm a"></ion-datetime>
+                                    <ion-datetime formControlName="Close" [value]="Close" displayFormat="H:mm a"></ion-datetime>
                                 </ion-item>
                                 <div *ngIf="form.controls.Close.invalid && form.controls.Hours.Close">
                                 </div>

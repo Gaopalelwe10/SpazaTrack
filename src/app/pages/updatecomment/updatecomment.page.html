@@ -1,0 +1,25 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="home"></ion-back-button>
+        </ion-buttons>
+
+        <ion-title>Update Comment</ion-title>
+
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <p class="center">Rate and Review</p>
+
+    <p class="center">
+        <ionic4-star-rating [(ngModel)]="rate" activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#ffb400" defaultColor="gray" readonly="false" fontSize="20px" (ratingChanged)="onModelChange($event)">
+        </ionic4-star-rating>
+    </p>
+
+    <p class="center gray">Share your experience to help other</p>
+
+    <ion-item>
+        <ion-textarea [(ngModel)]="text" (keyup.enter)="UpdateComment()" placeholder="{{tellus}}"></ion-textarea>
+    </ion-item>
+</ion-content>

@@ -217,4 +217,8 @@ export class AuthService {
     });
    
    }
+
+   zoom(url){
+    this.Viewer.show(url.photoURL, "" ,{share:true, copyToReference: true});
+  }
 }

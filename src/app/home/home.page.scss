@@ -21,12 +21,15 @@ input {
 
 p {
     text-align: left;
+    // font-size: 2vh;
+    font-size: 10px;
 }
 
 ion-card {
     width: 90% !important;
-    background: #20727de1 !important;
-    color: white;
+    // background: #20727de1;
+    color: white !important;
+    height: 100px;
 }
 
 .card-content-ios,
@@ -43,9 +46,16 @@ ion-card {
 .sc-ion-card-ios-h {
     margin-top: 5px;
     margin-bottom: 5px;
+    --background: #20727d;
 }
 
 .arrow {
     text-align: center;
     font-size: 30px;
+}
+
+.right {
+    float: right;
+    font-weight: bold;
+    font-size: 12px;
 }

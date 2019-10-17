@@ -23,10 +23,10 @@
             <p class="spazaName">
                 {{spaza.spazaName}}
             </p>
-            <p class="font" *ngIf="!spaza.commentCount">
+            <p class="font" *ngIf="spaza.commentCount==0">
                 No review
             </p>
-            <p class="font" *ngIf="spaza.commentCount > 0">
+            <p class="font" *ngIf="spaza.commentCount >0 ">
                 {{spaza.commentCount}} review
             </p>
 

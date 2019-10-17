@@ -11,7 +11,7 @@
 
 <ion-content>
     <div *ngIf="spaza$ | async as spaza">
-        <ion-card class="welcome-card" color="lightb">
+        <ion-card class="welcome-card" color="lightb" (click)="zoom(spaza)">
             <img src="{{spaza.photoURL}}">
             <!-- <ion-card-header>
 
@@ -41,10 +41,12 @@
 
 
         <p class="center">Rate and Review</p>
+
         <p class="center">
-            <ionic4-star-rating [(ngModel)]="rate" activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#ffb400 " defaultColor="gray" readonly="false" fontSize="20px" (ratingChanged)="onModelChange($event)">
+            <ionic4-star-rating [(ngModel)]="rate" activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#ffb400" defaultColor="gray" readonly="false" fontSize="20px" (ratingChanged)="onModelChange($event)">
             </ionic4-star-rating>
         </p>
+
         <p class="center gray" *ngIf="!isRate">Share your experience to help other</p>
 
         <ion-item *ngIf="isRate">
@@ -54,15 +56,17 @@
 
 
         <!-- Aggregated comments on the post document -->
-        <ng-container *ngIf="!comments$">
-            <ion-item>
+        <ng-container *ngIf="!Recent">
+            <ion-item *ngIf="spaza.commentCount  > 0">
                 <ion-label>Recent Comments</ion-label>
             </ion-item>
-            <div *ngFor="let comment of spaza.recentComments">
+            <div *ngFor="let comment of ItemsList | slice:0:5 ">
                 <div *ngFor="let user of users | async">
 
                     <ion-card *ngIf="user.uid === comment.uid" color="lightb">
+
                         <ion-item>
+                            <ion-icon *ngIf="comment.uid === uid " name="more" slot="end" color="primary" (click)="openPopover($event, comment)"></ion-icon>
                             <ion-avatar slot="start" *ngIf="user.photoURL =='' ">
                                 <img src="/assets/img/avatar.svg">
                             </ion-avatar>
@@ -79,6 +83,7 @@
                                     </ionic4-star-rating>
                                 </h3>
                             </ion-label>
+
                         </ion-item>
                         <ion-card-content>
                             <p color="light">{{ comment.createdAt |date: 'medium' }}</p>
@@ -92,43 +97,52 @@
 
 
         <!-- Firestore comment documents from the subcollection -->
-        <div *ngFor="let comment of comments$ | async">
-            <div *ngFor="let user of users | async">
+        <div *ngIf="Recent">
 
-                <ion-card *ngIf="user.uid === comment.uid" color="lightb">
-                    <ion-item>
-                        <ion-avatar slot="start" *ngIf="user.photoURL =='' ">
-                            <img src="/assets/img/avatar.svg">
-                        </ion-avatar>
-                        <ion-avatar slot="start" *ngIf="user.photoURL !='' ">
-                            <img src="{{user.photoURL}}">
-                        </ion-avatar>
 
-                        <ion-label>
-                            <h2>{{user.displayName}}</h2>
-                            <h3>
-                                <!-- <rating id="ionicRating2" [(ngModel)]="comment.rate" readonly="true" size="default"></rating> -->
+            <div *ngFor="let comment of ItemsList">
+                <div *ngFor="let user of users | async">
 
-                                <ionic4-star-rating [(ngModel)]="comment.rate" activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#ffb400 " defaultColor="gray" readonly="true" fontSize="10px">
-                                </ionic4-star-rating>
-                            </h3>
-                        </ion-label>
-                    </ion-item>
-                    <ion-card-content>
-                        <p color="light">{{ comment.createdAt |date: 'medium' }}</p>
-                        <h5>{{ comment.content }}</h5>
-                    </ion-card-content>
-                </ion-card>
+                    <ion-card *ngIf="user.uid === comment.uid" color="lightb">
+                        <ion-item>
+                            <ion-icon *ngIf="comment.uid === uid " name="more" slot="end" color="primary" (click)="openPopover($event, comment)"></ion-icon>
+                            <ion-avatar slot="start" *ngIf="user.photoURL =='' ">
+                                <img src="/assets/img/avatar.svg">
+                            </ion-avatar>
+                            <ion-avatar slot="start" *ngIf="user.photoURL !='' ">
+                                <img src="{{user.photoURL}}">
+                            </ion-avatar>
+
+                            <ion-label>
+                                <h2>{{user.displayName}}</h2>
+                                <h3>
+                                    <!-- <rating id="ionicRating2" [(ngModel)]="comment.rate" readonly="true" size="default"></rating> -->
+
+                                    <ionic4-star-rating [(ngModel)]="comment.rate" activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#ffb400 " defaultColor="gray" readonly="true" fontSize="10px">
+                                    </ionic4-star-rating>
+                                </h3>
+                            </ion-label>
+
+
+
+                        </ion-item>
+                        <ion-card-content>
+                            <p color="light">{{ comment.createdAt |date: 'medium' }}</p>
+                            <h5>{{ comment.content }}</h5>
+                        </ion-card-content>
+                    </ion-card>
+                </div>
             </div>
         </div>
 
-
-        <ion-button expand="full" color="primary" (click)="loadMore()" *ngIf="spaza.commentCount  > 5" class="ion-padding">
+        <ion-button expand="full" color="primary" (click)="loadMore()" *ngIf="spaza.commentCount  > 5 &&  isLoadComments == 'true'" class="ion-padding">
 
             Load all {{ spaza.commentCount }} comments
         </ion-button>
 
-
+        <ion-button expand="full" color="primary" (click)="loadRecentComments()" *ngIf="isLoadComments == 'false'" class="ion-padding">
+            View recent comments
+        </ion-button>
 
     </div>
 

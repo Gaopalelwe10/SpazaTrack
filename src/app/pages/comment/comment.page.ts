@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from 'src/app/services/auth.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { PopoverController } from '@ionic/angular';
+import { PopoverPage } from '../popover/popover.page';
 
 @Component({
   selector: 'app-comment',
@@ -19,20 +22,33 @@ export class CommentPage implements OnInit {
 
   text: string;
   rate = 0;
+  tellus;
+  
   spazauid: string;
   spazaName: string;
   uid: any;
   users: any;
-  tellus;
+
+
+
   isRate:boolean=false;
+  isLoadComments="true";
+
+  Recent:boolean=false;
+
+  ItemsList;
+  ItemslistR
   constructor(
     private afs: AngularFirestore,
     private route: ActivatedRoute,
     public afAuth: AngularFireAuth,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private formBuilder: FormBuilder,
+    private popoverController: PopoverController
+    ) {
 
     this.uid = this.afAuth.auth.currentUser.uid;
-  
+ 
   }
 
   ngOnInit() {
@@ -50,11 +66,23 @@ export class CommentPage implements OnInit {
     this.commentsRef = this.spazaRef.collection('comments', ref => ref.orderBy('createdAt', 'desc'))
     this.spaza$ = this.spazaRef.valueChanges();
     this.users = this.afs.collection('users').valueChanges();
+    this.commentsRef.snapshotChanges().subscribe(data =>{
+
+      this.ItemsList=data.map(e =>{
+        return{
+          key: e.payload.doc.id,
+          ...e.payload.doc.data()
+        } as comment;
+      });
+      console.log(this.ItemsList);
+    })
    
   }
   onModelChange(ev) {
     this.isRate=true;
-    console.log(this.rate)
+    this.rate=ev;
+    console.log( this.rate);
+    console.log("hhh :" + ev)
     if(this.rate== 3){
       this.tellus="Tell others why this place was okay";
     }else if(this.rate >3 && this.rate<=5){
@@ -69,10 +97,34 @@ export class CommentPage implements OnInit {
     this.commentsRef.add({ content: this.text, rate: this.rate, createdAt: Date.now(), uid: this.uid })
     this.text = '';
     this.rate = 0
+   
   }
 
   // Lazy Load the Firestore Collection
   loadMore() {
-    this.comments$ = this.commentsRef.valueChanges();
+    this.isLoadComments="false";
+    this.Recent=true;
+    
+  }
+
+  loadRecentComments(){
+    this.isLoadComments="true";
+    this.Recent=false;
+  }
+  zoom(spaza){
+    this.authService.zoom(spaza);
+  }
+
+  async openPopover(ev: any ,  comment){
+    const popover= await this.popoverController.create({
+      component: PopoverPage,
+      event: ev,
+      componentProps:{
+        comment:  comment,
+        spazauid: this.spazauid,
+      },
+      translucent: true
+    });
+    return await popover.present();
   }
 }

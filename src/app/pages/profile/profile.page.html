@@ -8,9 +8,11 @@
 </ion-header>
 
 <ion-content>
+
     <ion-list lines="none">
         <div *ngIf="authService.user  | async as user">
             <div class="profile-image">
+                <br>
                 <div *ngIf="user.photoURL =='' ">
                     <img src="/assets/img/avatar.svg">
 

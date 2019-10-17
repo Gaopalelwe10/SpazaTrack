@@ -18,8 +18,8 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Camera} from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 
-import { SharedModule } from './shared/shared/shared.module';
 import {HttpClientModule} from '@angular/common/http'
+import { PopoverPageModule } from './pages/popover/popover.module';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDMJCzNKJe3XDsfEdAPYnEAZWdsva0dTFU",
@@ -42,8 +42,8 @@ const firebaseConfig = {
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
-    SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    PopoverPageModule
   
   ],
   providers: [
