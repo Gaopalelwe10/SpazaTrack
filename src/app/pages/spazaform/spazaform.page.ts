@@ -12,6 +12,7 @@ import { auth } from 'firebase';
 import { AuthService } from 'src/app/services/auth.service';
 import { SpazaService } from 'src/app/services/spaza.service';
 import { TouchSequence } from 'selenium-webdriver';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-spazaform',
@@ -69,7 +70,8 @@ export class SpazaformPage implements OnInit {
     public mapboxService: MapboxService,
     public authService: AuthService,
     public spazaService: SpazaService,
-    private routeA: ActivatedRoute) {
+    private routeA: ActivatedRoute,
+    private alertCtrl : AlertController) {
 
     this.routeA.queryParams
       .subscribe(params => {
@@ -227,8 +229,22 @@ export class SpazaformPage implements OnInit {
      
     }).then(() => {
       console.log("updated")
-      this.route.navigateByUrl("spazaboard")
-
+      // this.route.navigateByUrl("spazaboard")
+      this.alertCtrl.create({
+        // message: 'You are to delete your comment',
+        subHeader: 'Your Infor is successfully updated',
+        buttons: [
+       
+          {
+            text: 'ok',
+            handler: () => {
+            
+            }
+          }
+        ]
+      }).then(
+        alert=> alert.present()
+      );
 
     }).catch(err => {
       alert(err.message)

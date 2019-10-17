@@ -25,7 +25,7 @@ export class PopoverPage implements OnInit {
     console.log(comment.key)
     this.DismissClick();
     const  alert = this.alertCtrl.create({
-      message: 'You are to delete your comment',
+      message: 'You are about to delete your comment',
       subHeader: 'Delete',
       buttons: [
         {
