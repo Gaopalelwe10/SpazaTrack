@@ -28,20 +28,22 @@ exports.aggregateComments = functions.firestore
                 // get the total comment count
                 const commentCount = querySnapshot.size
 
-                const recentComments = []
+                // const recentComments = []
 
                 // add data from the 5 most recent comments to the array
-                querySnapshot.forEach(doc => {
-                    recentComments.push(doc.data())
-                });
+                // querySnapshot.forEach(doc => {
+                //     recentComments.push(doc.data())
+                // });
 
-                recentComments.splice(5)
+                // recentComments.splice(5)
 
                 // record last comment timestamp
-                const lastActivity = recentComments[0].createdAt
+                // const lastActivity = recentComments[0].createdAt
 
                 // data to update on the document
-                const data = { commentCount, recentComments, lastActivity }
+                // const data = { commentCount, recentComments, lastActivity }
+
+                const data = { commentCount }
                 console.log(spazaId + "===jjjj===" + commentId)
                     // run update
                 return docRef.update(data)

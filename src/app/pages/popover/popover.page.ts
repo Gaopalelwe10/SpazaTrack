@@ -10,21 +10,22 @@ import { Router } from '@angular/router';
 })
 export class PopoverPage implements OnInit {
 
-  constructor(private popoverController: PopoverController,   private alertCtrl : AlertController,public spazaService : SpazaService, private route:Router) { }
+  constructor(private popoverController: PopoverController, private alertCtrl: AlertController, public spazaService: SpazaService, private route: Router) { }
 
   ngOnInit() {
   }
 
-  Edit(comment, spazauid){
+  Edit(comment, spazauid) {
     console.log(comment)
     this.DismissClick();
-   this.route.navigate(['updatecomment'], {queryParams: { spazauid:spazauid, key:comment.key, content: comment.content , rate:comment.rate}})
+    this.route.navigate(['updatecomment'], { queryParams: { spazauid: spazauid, key: comment.key, content: comment.content, rate: comment.rate } })
   }
-  Delete(comment,spazauid){
+
+  Delete(comment, spazauid) {
     console.log("spazauid " + spazauid)
     console.log(comment.key)
     this.DismissClick();
-    const  alert = this.alertCtrl.create({
+    const alert = this.alertCtrl.create({
       message: 'You are about to delete your comment',
       subHeader: 'Delete',
       buttons: [
@@ -32,20 +33,20 @@ export class PopoverPage implements OnInit {
           text: 'Cancel',
           role: 'cancel',
           handler: () => {
-           
+
             console.log('Cancel clicked');
           }
         },
         {
           text: 'Confirm',
           handler: () => {
-            this.spazaService.deleteComment(spazauid,comment.key);
+            this.spazaService.deleteComment(spazauid, comment.key);
             console.log('Confirm clicked');
           }
         }
       ]
     }).then(
-      alert=> alert.present()
+      alert => alert.present()
     );
   }
 

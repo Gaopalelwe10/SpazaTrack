@@ -63,7 +63,7 @@ export class UpdatecommentPage implements OnInit {
         {
           text: 'ok',
           handler: () => {
-          this.route.navigateByUrl('comment');
+          // this.route.navigateByUrl('comment');
           }
         }
       ]

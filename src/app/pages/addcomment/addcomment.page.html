@@ -1,0 +1,27 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start" (click)="close()">
+            <ion-button icon-only clear>
+                <ion-icon name="close"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-title>Add a Comment</ion-title>
+
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-paddding">
+    <p class="center">Rate and Review</p>
+
+    <p class="center">
+        <ionic4-star-rating [(ngModel)]="rate" activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#ffb400" defaultColor="gray" readonly="false" fontSize="20px" (ratingChanged)="onModelChange($event)">
+        </ionic4-star-rating>
+    </p>
+
+    <!-- <p class="center gray" *ngIf="!isRate">Share your experience to help other</p> -->
+
+    <ion-item>
+        <ion-textarea [(ngModel)]="text" (keyup.enter)="addComment()" placeholder="{{tellus}}"></ion-textarea>
+    </ion-item>
+</ion-content>

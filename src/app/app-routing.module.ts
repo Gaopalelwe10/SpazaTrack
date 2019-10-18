@@ -23,7 +23,8 @@ const routes: Routes = [
   { path: 'spazaform', loadChildren: './pages/spazaform/spazaform.module#SpazaformPageModule' },
   { path: 'spazaboard', loadChildren: './pages/spazaboard/spazaboard.module#SpazaboardPageModule' },  { path: 'comment', loadChildren: './pages/comment/comment.module#CommentPageModule' },
   { path: 'popover', loadChildren: './pages/popover/popover.module#PopoverPageModule' },
-  { path: 'updatecomment', loadChildren: './pages/updatecomment/updatecomment.module#UpdatecommentPageModule' }
+  { path: 'updatecomment', loadChildren: './pages/updatecomment/updatecomment.module#UpdatecommentPageModule' },
+  { path: 'addcomment', loadChildren: './pages/addcomment/addcomment.module#AddcommentPageModule' }
 
 ];
 

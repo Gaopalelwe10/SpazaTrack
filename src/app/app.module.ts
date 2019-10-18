@@ -20,6 +20,9 @@ import { File } from '@ionic-native/file/ngx';
 
 import {HttpClientModule} from '@angular/common/http'
 import { PopoverPageModule } from './pages/popover/popover.module';
+import { AddcommentPage } from './pages/addcomment/addcomment.page';
+import { FormsModule } from '@angular/forms';
+import { SharedModule } from './shared/shared/shared.module';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDMJCzNKJe3XDsfEdAPYnEAZWdsva0dTFU",
@@ -32,8 +35,8 @@ const firebaseConfig = {
 };
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent, AddcommentPage],
+  entryComponents: [AddcommentPage],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -43,8 +46,9 @@ const firebaseConfig = {
     AngularFireAuthModule,
     AngularFireStorageModule,
     HttpClientModule,
-    PopoverPageModule
-  
+    PopoverPageModule,
+    FormsModule,
+    SharedModule
   ],
   providers: [
     StatusBar,
@@ -55,6 +59,6 @@ const firebaseConfig = {
     Camera,
     File
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

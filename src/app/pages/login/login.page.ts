@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { AlertController, MenuController } from '@ionic/angular';
+import { AlertController, MenuController, LoadingController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -13,7 +13,14 @@ export class LoginPage implements OnInit {
   public loginForm: FormGroup;
   public forgotpasswordForm: FormGroup;
   isForgotPassword: boolean = true;
-  constructor(private fb: FormBuilder, private route: Router, private authService: AuthService,private alertCtrl : AlertController, public menuCtrl: MenuController) {
+  // loading: any;
+
+  constructor(private fb: FormBuilder, 
+    private route: Router, 
+    private authService: AuthService,
+    private alertCtrl : AlertController, 
+    public menuCtrl: MenuController,
+    public loadingCtrl: LoadingController) {
     this.loginForm = fb.group({
       email: ['', Validators.compose([Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'), Validators.required])],
       password: ['', Validators.compose([Validators.minLength(6), Validators.maxLength(12), Validators.required])],
@@ -29,8 +36,16 @@ export class LoginPage implements OnInit {
   ionViewWillEnter() {
     this.menuCtrl.enable(false);
   }
-  login() {
-    this.authService.login(this.loginForm.value.email, this.loginForm.value.password);
+  async login() {
+    const loading = this.loadingCtrl.create({
+      message: 'Signing in, Please wait...'
+    });
+  
+      (await loading).present();
+    this.authService.login(this.loginForm.value.email, this.loginForm.value.password).then(async ()=>{
+  
+    });
+    (await loading).dismiss();
   }
 
   registerPage() {

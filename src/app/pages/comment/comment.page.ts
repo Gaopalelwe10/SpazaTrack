@@ -5,8 +5,9 @@ import { ActivatedRoute } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, ModalController } from '@ionic/angular';
 import { PopoverPage } from '../popover/popover.page';
+import { AddcommentPage } from '../addcomment/addcomment.page';
 
 @Component({
   selector: 'app-comment',
@@ -44,7 +45,8 @@ export class CommentPage implements OnInit {
     public afAuth: AngularFireAuth,
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    public modalController: ModalController
     ) {
 
     this.uid = this.afAuth.auth.currentUser.uid;
@@ -78,7 +80,16 @@ export class CommentPage implements OnInit {
     })
    
   }
-  onModelChange(ev) {
+  async onModelChange(ev) {
+    const modal = await this.modalController.create({
+      component: AddcommentPage,
+      componentProps:{
+        rate:ev,
+        spazauid: this.spazauid,
+      },
+    });
+    this.rate = 0;
+    return await modal.present();
     this.isRate=true;
     this.rate=ev;
     console.log( this.rate);
