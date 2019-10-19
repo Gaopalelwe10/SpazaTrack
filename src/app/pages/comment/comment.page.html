@@ -11,19 +11,40 @@
 
 <ion-content>
     <div *ngIf="spaza$ | async as spaza">
-        <ion-card class="welcome-card" color="lightb" (click)="zoom(spaza)">
-            <img src="{{spaza.photoURL}}">
-            <!-- <ion-card-header>
+        <ion-card class="welcome-card" color="lightb">
+            <!-- <img src="{{spaza.photoURL}}" (click)="zoom(spaza)"> -->
+            <div *ngIf="spaza.photoURL == ''">
 
-                <ion-card-title>{{ spaza.spazaName }}</ion-card-title>
+            </div>
+
+            <div *ngIf="spaza.photoURL !=''">
+                <ion-img [src]="spaza.photoURL" (click)="zoom(spaza)"></ion-img>
+            </div>
+            <!-- <ion-card-header>
+                <ion-card-subtitle>{{ spaza.Discription }}</ion-card-subtitle>
             </ion-card-header> -->
             <ion-card-content>
+                <ion-item color="lightb" lines="none">
+                    <ion-text>{{ spaza.Discription }}</ion-text>
+                </ion-item>
+                <ion-item color="lightb" lines="none">
+                    <ion-icon name="pin" slot="start" color="primary"></ion-icon>
+                    <ion-text>{{spaza.Address}}</ion-text>
+                </ion-item>
+                <ion-item color="lightb" lines="none">
+                    <ion-icon name="time" slot="start" color="primary"></ion-icon>
+                    <ion-text>{{spaza.Hours}}</ion-text>
+                </ion-item>
+                <ion-item color="lightb" lines="none">
+                    <ion-icon name="call" slot="start" color="primary"></ion-icon>
+                    <ion-text>{{spaza.Number}}</ion-text>
+                </ion-item>
+                <ion-item color="lightb" lines="none">
+                    <ion-text> Total Comments: {{ spaza.commentCount }}</ion-text>
+                </ion-item>
 
-                <p>
-                    {{ spaza.Discription }}
-                </p>
-                <br>
-                <p>
+
+                <!-- <p>
                     <ion-icon name="pin" slot="start" color="primary"></ion-icon> {{spaza.Address}}
                 </p>
                 <p>
@@ -35,7 +56,7 @@
                 <br>
                 <p>
                     Total Comments: {{ spaza.commentCount }}
-                </p>
+                </p> -->
             </ion-card-content>
         </ion-card>
 
@@ -49,9 +70,9 @@
 
         <p class="center gray" *ngIf="!isRate">Share your experience to help other</p>
 
-        <ion-item *ngIf="isRate">
+        <!-- <ion-item *ngIf="isRate">
             <ion-textarea [(ngModel)]="text" (keyup.enter)="addComment()" placeholder="{{tellus}}"></ion-textarea>
-        </ion-item>
+        </ion-item> -->
 
 
 
@@ -71,7 +92,9 @@
                                 <img src="/assets/img/avatar.svg">
                             </ion-avatar>
                             <ion-avatar slot="start" *ngIf="user.photoURL !='' ">
-                                <img src="{{user.photoURL}}">
+
+                                <ion-img [src]="user.photoURL"></ion-img>
+
                             </ion-avatar>
 
                             <ion-label>

@@ -90,17 +90,7 @@ export class CommentPage implements OnInit {
     });
     this.rate = 0;
     return await modal.present();
-    this.isRate=true;
-    this.rate=ev;
-    console.log( this.rate);
-    console.log("hhh :" + ev)
-    if(this.rate== 3){
-      this.tellus="Tell others why this place was okay";
-    }else if(this.rate >3 && this.rate<=5){
-      this.tellus="Tell others why you liked this place ";
-    }else{
-      this.tellus="Tell others why you disliked this place ";
-    }
+
   }
 
   addComment() {

@@ -20,8 +20,15 @@
     </p>
 
     <!-- <p class="center gray" *ngIf="!isRate">Share your experience to help other</p> -->
+    <ion-list>
+        <ion-item>
+            <ion-textarea [(ngModel)]="text" placeholder="{{tellus}}"></ion-textarea>
+            <ion-buttons item-right>
+                <ion-button (click)="addComment()" slot="end">
+                    <ion-icon name="send" color="primary"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+        </ion-item>
+    </ion-list>
 
-    <ion-item>
-        <ion-textarea [(ngModel)]="text" (keyup.enter)="addComment()" placeholder="{{tellus}}"></ion-textarea>
-    </ion-item>
 </ion-content>

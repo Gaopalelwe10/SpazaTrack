@@ -23,6 +23,7 @@ import { PopoverPageModule } from './pages/popover/popover.module';
 import { AddcommentPage } from './pages/addcomment/addcomment.page';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared/shared.module';
+import { UpdatecommentPage } from './pages/updatecomment/updatecomment.page';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDMJCzNKJe3XDsfEdAPYnEAZWdsva0dTFU",
@@ -35,8 +36,8 @@ const firebaseConfig = {
 };
 
 @NgModule({
-  declarations: [AppComponent, AddcommentPage],
-  entryComponents: [AddcommentPage],
+  declarations: [AppComponent, AddcommentPage,  UpdatecommentPage],
+  entryComponents: [AddcommentPage,  UpdatecommentPage],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),

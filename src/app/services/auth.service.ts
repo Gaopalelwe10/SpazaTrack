@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { NavController, AlertController } from '@ionic/angular';
+import { NavController, AlertController, LoadingController } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, of } from 'rxjs';
-import { switchMap, finalize} from 'rxjs/operators';
+import { switchMap, finalize } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
@@ -15,30 +15,31 @@ import * as firebase from 'firebase'
 export class AuthService {
   user: Observable<User>;
 
-  selectedFile= null;
+  selectedFile = null;
   uploadPercent: any;
   downloadU: any;
-  uniqkey :any;
-  today :any = new Date() ;
-  date = this.today.getDate()+""+(this.today.getMonth()+1)+""+this.today.getFullYear();
-  time = this.today.getHours() +""+ this.today.getMinutes();
-  dateTime = this.date+""+this.time;
+  uniqkey: any;
+  today: any = new Date();
+  date = this.today.getDate() + "" + (this.today.getMonth() + 1) + "" + this.today.getFullYear();
+  time = this.today.getHours() + "" + this.today.getMinutes();
+  dateTime = this.date + "" + this.time;
 
   progress
   constructor(
-    private afs: AngularFirestore, 
-    private nav: NavController, 
-    public afAuth: AngularFireAuth, 
-    private alertCtrl : AlertController,
+    private afs: AngularFirestore,
+    private nav: NavController,
+    public afAuth: AngularFireAuth,
+    private alertCtrl: AlertController,
     private storage: AngularFireStorage,
-    private Viewer : PhotoViewer,
+    private Viewer: PhotoViewer,
     private camera: Camera,
-    private file: File
-     ) { 
-    afAuth.auth.onAuthStateChanged((user)=>{
-      if(user){
+    private file: File,
+    public loadingCtrl: LoadingController
+  ) {
+    afAuth.auth.onAuthStateChanged((user) => {
+      if (user) {
         this.nav.navigateRoot("home");
-      }else{
+      } else {
         this.nav.navigateRoot("");
       }
     })
@@ -53,26 +54,43 @@ export class AuthService {
     )
   }
 
- 
-    
-  async login(email: string , password: string){
-    await this.afAuth.auth.signInWithEmailAndPassword(email,password).then((success)=>{
-       console.log(success);
-     }).catch((error)=>{
-       this.alertCtrl.create({
-        // message: 'You can not order more than six',
-        subHeader: 'Wrong Password Or Email',
-        buttons: ['Ok']}).then(
-        alert=> alert.present()
-      );
-     })
-   }
-   
-   async signup(email, password){
-    await this.afAuth.auth.createUserWithEmailAndPassword(email,password).then((success)=>{
+
+
+  async login(email: string, password: string) {
+    await this.afAuth.auth.signInWithEmailAndPassword(email, password).then((success) => {
       console.log(success);
-    }).catch((error)=>{
-     console.log(error)
+    }).catch((err) => {
+      this.alertCtrl.create({
+        // message: 'You can not order more than six',
+        subHeader: err.message,
+        buttons: ['Ok']
+      }).then(
+        alert => alert.present()
+      );
+    })
+  }
+
+  async signup(email, password) {
+    const loading = this.loadingCtrl.create({
+      message: 'Registering, Please wait...'
+    });
+    (await loading).present();
+    await this.afAuth.auth.createUserWithEmailAndPassword(email, password).then(async (success) => {
+
+      console.log(success);
+      (await loading).dismiss();
+
+    }).catch(async (err) => {
+
+      (await loading).dismiss();
+      
+      this.alertCtrl.create({
+        subHeader: err.message,
+        buttons: ['Ok']
+      }).then(
+        alert => alert.present()
+      );
+
     })
   }
 
@@ -80,24 +98,24 @@ export class AuthService {
     return await this.afAuth.auth.sendPasswordResetEmail(passwordResetEmail);
   }
 
-  async logout(){
-    await this.afAuth.auth.signOut().then((success)=>{
+  async logout() {
+    await this.afAuth.auth.signOut().then((success) => {
       console.log(success);
       console.log("success");
       this.nav.navigateRoot("login");
-    }).catch((error)=>{
+    }).catch((error) => {
       console.log(error)
     })
   }
 
-  getUsers(){
-    return this.afs.collection('users', ref=>ref.orderBy('displayName')).valueChanges()
+  getUsers() {
+    return this.afs.collection('users', ref => ref.orderBy('displayName')).valueChanges()
   }
   getUID(): string {
-		return this.afAuth.auth.currentUser.uid;
+    return this.afAuth.auth.currentUser.uid;
   }
-  updateRegistered(key,value){
-    return this.afs.doc('users/'+ key).update({
+  updateRegistered(key, value) {
+    return this.afs.doc('users/' + key).update({
       Registered: value,
     })
   }
@@ -105,27 +123,27 @@ export class AuthService {
   uploadProfilePic(event) {
     const file = event.target.files[0];
     this.uniqkey = 'PIC' + this.dateTime;
-    const filePath = this.uniqkey ;
+    const filePath = this.uniqkey;
     const fileRef = this.storage.ref(filePath);
     const task = this.storage.upload(filePath, file);
 
     // observe percentage changes
-  
+
     task.snapshotChanges().pipe(
       finalize(() => {
-        this.downloadU =fileRef.getDownloadURL().subscribe(urlPath => {
-          console.log(urlPath); 
+        this.downloadU = fileRef.getDownloadURL().subscribe(urlPath => {
+          console.log(urlPath);
           // this.MUsers.update({
           //   photoURL: urlPath
           // })
-          this.afs.doc('users/'+ this.getUID()).update({
+          this.afs.doc('users/' + this.getUID()).update({
             photoURL: urlPath
           })
-          this.uploadPercent=null;
+          this.uploadPercent = null;
         });
       })
-    ).subscribe();  
-    return   this.uploadPercent = task.percentageChanges();
+    ).subscribe();
+    return this.uploadPercent = task.percentageChanges();
   }
 
   async pickImage() {
@@ -142,16 +160,16 @@ export class AuthService {
       console.log('File Upload Success ');
     } catch (e) {
       console.log(e.message);
-      
+
     }
-   }
-   
-   makeFileIntoBlob(_imagePath) {
+  }
+
+  makeFileIntoBlob(_imagePath) {
     // INSTALL PLUGIN - cordova plugin add cordova-plugin-file
     return new Promise((resolve, reject) => {
       let fileName = '';
       this.file
-      .resolveLocalFilesystemUrl(_imagePath)
+        .resolveLocalFilesystemUrl(_imagePath)
         .then(fileEntry => {
           const { name, nativeURL } = fileEntry;
           // get the path..
@@ -176,8 +194,8 @@ export class AuthService {
         })
         .catch(e => reject(e));
     });
-   }
-   
+  }
+
   uploadToFirebase(_imageBlobInfo) {
     console.log('uploadToFirebase');
     return new Promise((resolve, reject) => {
@@ -188,20 +206,20 @@ export class AuthService {
         (_snapshot: any) => {
           console.log(
             'snapshot progess ' +
-              (_snapshot.bytesTransferred / _snapshot.totalBytes) * 100
+            (_snapshot.bytesTransferred / _snapshot.totalBytes) * 100
           );
-           this.progress = (_snapshot.bytesTransferred / _snapshot.totalBytes) * 100;
+          this.progress = (_snapshot.bytesTransferred / _snapshot.totalBytes) * 100;
           if (this.progress === 100) {
             fileRef.getDownloadURL().then(urlPath => {
               // this.profileUser.imageUrl = url;
-               // console.log('profile', this.profileUser.key);
-               this.afs.doc('users/'+ this.getUID()).update({
+              // console.log('profile', this.profileUser.key);
+              this.afs.doc('users/' + this.getUID()).update({
                 photoURL: urlPath
               })
-             console.log('downloadurl',  urlPath);
-             this.progress=null;
-             console.log('profile');
-          //  this.profileService.updateImage(this.profileUser);
+              console.log('downloadurl', urlPath);
+              this.progress = null;
+              console.log('profile');
+              //  this.profileService.updateImage(this.profileUser);
             });
           }
         },
@@ -215,10 +233,10 @@ export class AuthService {
         }
       );
     });
-   
-   }
 
-   zoom(url){
-    this.Viewer.show(url.photoURL, "" ,{share:true, copyToReference: true});
+  }
+
+  zoom(url) {
+    this.Viewer.show(url.photoURL, "", { share: true, copyToReference: true });
   }
 }

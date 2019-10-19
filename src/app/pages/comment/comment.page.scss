@@ -1,4 +1,4 @@
-.welcome-card img {
+.welcome-card ion-img {
     max-height: 35vh;
     overflow: hidden;
 }
@@ -9,4 +9,12 @@
 
 .gray {
     color: rgb(187, 186, 186);
+}
+
+ion-icon {
+    font-size: 20px;
+}
+
+ion-text {
+    font-size: 14px;
 }

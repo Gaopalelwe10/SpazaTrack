@@ -3,7 +3,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from 'src/app/services/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { NavController } from '@ionic/angular';
+import { NavController, LoadingController, AlertController } from '@ionic/angular';
 import { MustMatch } from 'src/app/module/must-match';
 import { Router } from '@angular/router';
 
@@ -17,11 +17,13 @@ export class RegisterPage implements OnInit {
   register: FormGroup;
 
   constructor(private fb: FormBuilder,
-    private afs :AngularFirestore, 
-    private authService : AuthService, 
-    private afAuth :AngularFireAuth, 
-    private nav : NavController,
-    private route : Router) {
+    private afs: AngularFirestore,
+    private authService: AuthService,
+    private afAuth: AngularFireAuth,
+    private nav: NavController,
+    private route: Router,
+    public loadingCtrl: LoadingController,
+    private alertCtrl: AlertController) {
     this.register = fb.group({
       username: ['', Validators.compose([Validators.pattern('[a-zA-Z ]*'), Validators.minLength(4), Validators.maxLength(30), Validators.required])],
       // surname: ['', Validators.compose([Validators.pattern('[a-zA-Z ]*'), Validators.minLength(4), Validators.maxLength(30),Validators.required])],
@@ -38,25 +40,29 @@ export class RegisterPage implements OnInit {
   ngOnInit() {
   }
 
-  PersonRegister() {
-    this.authService.signup(this.register.value.email,this.register.value.password ).then((value) => {
+  async PersonRegister() {
+
+    
+
+    this.authService.signup(this.register.value.email, this.register.value.password).then( () => {
       this.afs.collection('users').doc(this.afAuth.auth.currentUser.uid).set({
-        displayName:this.register.value.username,   
+        displayName: this.register.value.username,
         uid: this.afAuth.auth.currentUser.uid,
-        Timestamp:Date.now(),
-        Email:this.register.value.email,
-        Address:this.register.value.address,
-        photoURL:'', 
-        Registered:"no",
-      }).then(()=>{
-        
+        Timestamp: Date.now(),
+        Email: this.register.value.email,
+        Address: this.register.value.address,
+        photoURL: '',
+        Registered: "no",
+      }).then(() => {
         this.nav.navigateRoot('home');
-      }).catch(err=>{
+      }).catch(err => {
+        
         alert(err.message)
-      })
+      });
+      
     });
   }
-  login(){
+  login() {
     this.route.navigateByUrl('login');
   }
 }

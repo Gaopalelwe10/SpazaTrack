@@ -1,10 +1,12 @@
 <ion-header>
     <ion-toolbar color="primary">
-        <ion-buttons slot="start">
-            <ion-back-button defaultHref="home"></ion-back-button>
+        <ion-buttons slot="start" (click)="close()">
+            <ion-button icon-only clear>
+                <ion-icon name="close"></ion-icon>
+            </ion-button>
         </ion-buttons>
 
-        <ion-title>Update Comment</ion-title>
+        <ion-title>Comment Update</ion-title>
 
     </ion-toolbar>
 </ion-header>
@@ -20,6 +22,11 @@
     <p class="center gray">Share your experience to help other</p>
 
     <ion-item>
-        <ion-textarea [(ngModel)]="text" (keyup.enter)="UpdateComment()" placeholder="{{tellus}}"></ion-textarea>
+        <ion-textarea [(ngModel)]="text" placeholder="{{tellus}}"></ion-textarea>
+        <ion-buttons item-right>
+            <ion-button (click)="UpdateComment()" slot="end">
+                <ion-icon name="send" color="primary"></ion-icon>
+            </ion-button>
+        </ion-buttons>
     </ion-item>
 </ion-content>

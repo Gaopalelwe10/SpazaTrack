@@ -15,10 +15,10 @@ export class LoginPage implements OnInit {
   isForgotPassword: boolean = true;
   // loading: any;
 
-  constructor(private fb: FormBuilder, 
-    private route: Router, 
+  constructor(private fb: FormBuilder,
+    private route: Router,
     private authService: AuthService,
-    private alertCtrl : AlertController, 
+    private alertCtrl: AlertController,
     public menuCtrl: MenuController,
     public loadingCtrl: LoadingController) {
     this.loginForm = fb.group({
@@ -38,14 +38,14 @@ export class LoginPage implements OnInit {
   }
   async login() {
     const loading = this.loadingCtrl.create({
-      message: 'Signing in, Please wait...'
+      message: 'Signing in, Please wait...',
     });
-  
-      (await loading).present();
-    this.authService.login(this.loginForm.value.email, this.loginForm.value.password).then(async ()=>{
-  
+    (await loading).present();
+
+    this.authService.login(this.loginForm.value.email, this.loginForm.value.password).then(async () => {
+      (await loading).dismiss();
     });
-    (await loading).dismiss();
+
   }
 
   registerPage() {
@@ -55,29 +55,31 @@ export class LoginPage implements OnInit {
   forgotpassword() {
     this.isForgotPassword = false;
   }
-  Cancel(){
+  Cancel() {
     this.isForgotPassword = true;
   }
   reset() {
     this.authService.sendPasswordResetEmail(this.forgotpasswordForm.value.email)
-    .then((success)=>{
-      this.alertCtrl.create({
-        // message: 'You can not order more than six',
-        subHeader: 'Check your Email account',
-        buttons: ['Ok']}).then(
-        alert=> alert.present()
-      );
-      this.isForgotPassword=true;
-    }).catch((error)=>{
-      this.alertCtrl.create({
-        // message: 'You can not order more than six',
-        subHeader: 'Wrong Email',
-        buttons: ['Ok']}).then(
-        alert=> alert.present()
-      );
-    })
+      .then((success) => {
+        this.alertCtrl.create({
+          // message: 'You can not order more than six',
+          subHeader: 'Check your Email account',
+          buttons: ['Ok']
+        }).then(
+          alert => alert.present()
+        );
+        this.isForgotPassword = true;
+      }).catch((error) => {
+        this.alertCtrl.create({
+          // message: 'You can not order more than six',
+          subHeader: 'Wrong Email',
+          buttons: ['Ok']
+        }).then(
+          alert => alert.present()
+        );
+      })
 
-     
+
   }
 
 

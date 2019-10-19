@@ -136,6 +136,10 @@ export class ProfilePage implements OnInit {
   pickImage(){
     this.authService.pickImage();
   }
+
+  zoom(user){
+    this.authService.zoom(user)
+  }
 }
 
 

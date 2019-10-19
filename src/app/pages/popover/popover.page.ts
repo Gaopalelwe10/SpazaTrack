@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { PopoverController, AlertController } from '@ionic/angular';
+import { PopoverController, AlertController, ModalController } from '@ionic/angular';
 import { SpazaService } from 'src/app/services/spaza.service';
 import { Router } from '@angular/router';
+import { AddcommentPage } from '../addcomment/addcomment.page';
+import { UpdatecommentPage } from '../updatecomment/updatecomment.page';
 
 @Component({
   selector: 'app-popover',
@@ -10,15 +12,32 @@ import { Router } from '@angular/router';
 })
 export class PopoverPage implements OnInit {
 
-  constructor(private popoverController: PopoverController, private alertCtrl: AlertController, public spazaService: SpazaService, private route: Router) { }
+  constructor(private popoverController: PopoverController, 
+    private alertCtrl: AlertController, 
+    public spazaService: SpazaService, 
+    private route: Router,
+    public modalController : ModalController) { }
 
   ngOnInit() {
   }
-
-  Edit(comment, spazauid) {
+  // this.text = params.content;
+  //       this.rate = params.rate;
+  //       this.key = params.key
+  async Edit(comment, spazauid) {
     console.log(comment)
     this.DismissClick();
-    this.route.navigate(['updatecomment'], { queryParams: { spazauid: spazauid, key: comment.key, content: comment.content, rate: comment.rate } })
+    // this.route.navigate(['updatecomment'], { queryParams: { spazauid: spazauid, key: comment.key, content: comment.content, rate: comment.rate } })
+    const modal = await this.modalController.create({
+      component:  UpdatecommentPage,
+      componentProps:{
+        key:comment.key,
+        text:comment.content,
+        rate:comment.rate,
+        spazauid: spazauid,
+      },
+    });
+    ;
+    return await modal.present();
   }
 
   Delete(comment, spazauid) {

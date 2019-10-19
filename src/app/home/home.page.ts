@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { MenuController, IonSlides } from '@ionic/angular';
+import { MenuController, IonSlides, LoadingController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
@@ -33,7 +33,8 @@ export class HomePage {
     private authService: AuthService,
     public geolocation: Geolocation,
     public spazaService: SpazaService,
-    private route: Router
+    private route: Router,
+    public loadingCtrl: LoadingController
     ) 
     {
 
@@ -51,6 +52,10 @@ export class HomePage {
 
 
   ionViewDidEnter() {
+    //   const loading = this.loadingCtrl.create({
+    //   message: 'Signing in, Please wait...',
+    // });
+    // (await loading).present();
     this.initializeMapBox();
     this.slideChanged();
   }

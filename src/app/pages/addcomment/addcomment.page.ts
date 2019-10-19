@@ -26,14 +26,15 @@ export class AddcommentPage implements OnInit {
     private afs: AngularFirestore,
     private afAuth: AngularFireAuth,
     private navParams: NavParams,
-    private alertCtrl: AlertController) {
+    private alertCtrl: AlertController,
+    ) {
 
     this.uid = this.afAuth.auth.currentUser.uid;
     this.rate = this.navParams.get('rate');
     this.spazauid = this.navParams.get('spazauid');
 
 
-    console.log(this.navParams.get('spazauid'))
+    console.log(this.navParams.get('spazauid'));
     console.log(this.rate)
     this.onModelChange(this.rate);
   }
@@ -61,24 +62,24 @@ export class AddcommentPage implements OnInit {
   addComment() {
     this.isRate = false;
     this.commentsRef.add({ content: this.text, rate: this.rate, createdAt: Date.now(), uid: this.uid }).then(() => {
+      this.close();
+      // this.alertCtrl.create({
+      //   // message: 'You are to delete your comment',
+      //   subHeader: 'Comment Added',
+      //   buttons: [
 
-      this.alertCtrl.create({
-        // message: 'You are to delete your comment',
-        subHeader: 'Comment Added',
-        buttons: [
-
-          {
-            text: 'ok',
-            handler: () => {
-              this.text = '';
-              this.rate = 0
-              this.close();
-            }
-          }
-        ]
-      }).then(
-        alert => alert.present()
-      );
+      //     {
+      //       text: 'ok',
+      //       handler: () => {
+      //         this.text = '';
+      //         this.rate = 0
+      //         this.close();
+      //       }
+      //     }
+      //   ]
+      // }).then(
+      //   alert => alert.present()
+      // );
     })
   }
 
