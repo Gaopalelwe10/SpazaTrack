@@ -23,8 +23,8 @@ export class SpazaService {
      console.log("hello" + ev)
   }
 
-  deleteComment(Suid, Cuid){
-    return this.afs.collection('spazashop').doc(Suid).collection('comments').doc(Cuid).delete();
+  deleteComment(Sid, Cid){
+    return this.afs.collection('spazashop').doc(Sid).collection('comments').doc(Cid).delete();
   }
   updateComment(Suid, Cuid, text, rate){
     return this.afs.collection('spazashop').doc(Suid).collection('comments').doc(Cuid).update({
@@ -33,7 +33,13 @@ export class SpazaService {
     });
   }
 
-  addproduct(Suid, product){
-    return this.afs.collection('spazashop').doc(Suid).collection('products').add(product);
+  addproduct(Sid, product){
+    return this.afs.collection('spazashop').doc(Sid).collection('products').add(product);
+  }
+  updateproduct(suid,key,product){
+    return this.afs.collection('spazashop').doc(suid).collection('products').doc(key).update(product);
+  }
+  deleteprodduct(sid , pid){
+    return this.afs.collection('spazashop').doc(sid).collection('products').doc(pid).delete();
   }
 }

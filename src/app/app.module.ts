@@ -25,6 +25,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared/shared.module';
 import { UpdatecommentPage } from './pages/updatecomment/updatecomment.page';
 import { AddproductPage } from './pages/addproduct/addproduct.page';
+import { EditproductPage } from './pages/editproduct/editproduct.page';
+import { ProductlistcustomerPageModule } from './pages/productlistcustomer/productlistcustomer.module';
+import { ProductlistcustomerPage } from './pages/productlistcustomer/productlistcustomer.page';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDMJCzNKJe3XDsfEdAPYnEAZWdsva0dTFU",
@@ -37,8 +40,21 @@ const firebaseConfig = {
 };
 
 @NgModule({
-  declarations: [AppComponent, AddcommentPage,  UpdatecommentPage, AddproductPage],
-  entryComponents: [AddcommentPage,  UpdatecommentPage, AddproductPage],
+  declarations: [
+    AppComponent, 
+    AddcommentPage,  
+    UpdatecommentPage, 
+    AddproductPage, 
+    EditproductPage,
+    ProductlistcustomerPage
+  ],
+  entryComponents: [
+    AddcommentPage,  
+    UpdatecommentPage,
+     AddproductPage, 
+     EditproductPage,
+     ProductlistcustomerPage
+    ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),

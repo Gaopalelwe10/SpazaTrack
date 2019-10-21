@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { AddproductPage } from '../addproduct/addproduct.page';
+import { EditproductPage } from '../editproduct/editproduct.page';
 
 @Component({
   selector: 'app-productlistowner',
@@ -18,7 +19,7 @@ export class ProductlistownerPage implements OnInit {
   spazauid
 
 
-
+size
   constructor(
     private afs: AngularFirestore,
     private afAuth: AngularFireAuth,
@@ -40,16 +41,25 @@ export class ProductlistownerPage implements OnInit {
     // this.postRef = this.afs.doc('posts/testPost')
     this.productRef = this.spazaRef.collection('products', ref => ref.orderBy('createdAt', 'desc'));
 
-    this.productRef.snapshotChanges().subscribe(data => {
+    this.productRef.ref.get().then((  query )=>{
+       this.size= query.size
+       if(this.size == 0){
+        this.productList =0
+       }else{
+        this.productRef.snapshotChanges().subscribe(data => {
 
-      this.productList = data.map(e => {
-        return {
-          key: e.payload.doc.id,
-          ...e.payload.doc.data()
-        } as Product;
-      });
-      console.log(this.productList);
+          this.productList = data.map(e => {
+            return {
+              key: e.payload.doc.id,
+              ...e.payload.doc.data()
+            } as Product;
+          });
+          console.log(this.productList);
+        })
+       }
     })
+ 
+
 
 
   }
@@ -64,5 +74,29 @@ export class ProductlistownerPage implements OnInit {
   
     return await modal.present();
 
+  }
+  async editproduct(product) {
+    const modal = await this.modalController.create({
+      component: EditproductPage,
+      componentProps:{
+        image:product.image,
+        ProName:product.ProName,
+        key:product.key,
+        Price: product.Price,
+        Type: product.Type,
+        spazauid: this.spazauid,
+      },
+    });
+  
+    return await modal.present();
+
+  }
+
+  product = {
+    image: "",
+    ProName: "",
+    Price: 0,
+    Type: "",
+    createdAt: 0,
   }
 }

@@ -12,7 +12,7 @@ import { auth } from 'firebase';
 import { AuthService } from 'src/app/services/auth.service';
 import { SpazaService } from 'src/app/services/spaza.service';
 import { TouchSequence } from 'selenium-webdriver';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-spazaform',
@@ -41,10 +41,7 @@ export class SpazaformPage implements OnInit {
   downloadU: any;
   uniqkey: any;
 
-  today: any = new Date();
-  date = this.today.getDate() + "" + (this.today.getMonth() + 1) + "" + this.today.getFullYear();
-  time = this.today.getHours() + "" + this.today.getMinutes();
-  dateTime = this.date + "" + this.time;
+
 
   urlPath: any = '';
   list: any;
@@ -71,7 +68,8 @@ export class SpazaformPage implements OnInit {
     public authService: AuthService,
     public spazaService: SpazaService,
     private routeA: ActivatedRoute,
-    private alertCtrl : AlertController) {
+    private alertCtrl: AlertController,
+    public loadingCtrl: LoadingController) {
 
     this.routeA.queryParams
       .subscribe(params => {
@@ -117,7 +115,7 @@ export class SpazaformPage implements OnInit {
         this.Close = data.Close;
         this.lat = data.lat;
         this.lng = data.lng;
-        this.urlPath=data.photoURL;
+        this.urlPath = data.photoURL;
       })
     }
 
@@ -125,7 +123,7 @@ export class SpazaformPage implements OnInit {
 
   Pic(event) {
     const file = event.target.files[0];
-    this.uniqkey = 'PIC' + this.dateTime;
+    this.uniqkey = 'PIC' + Math.random().toString(36).substring(2);
     const filePath = this.uniqkey;
     const fileRef = this.storage.ref(filePath);
     const task = this.storage.upload(filePath, file);
@@ -188,7 +186,12 @@ export class SpazaformPage implements OnInit {
     // });
     this.addresses = [];
   }
-  Register() {
+  async Register() {
+    const loading = this.loadingCtrl.create({
+      message: 'Registering in, Please wait...',
+    });
+    (await loading).present();
+
     this.afs.collection('spazashop').doc(this.uid).set({
       spazaName: this.form.value.Spaza,
       uid: this.uid,
@@ -203,15 +206,19 @@ export class SpazaformPage implements OnInit {
       lat: this.lat,
       lng: this.lng,
       commentCount: 0,
+
     }).then(() => {
-      this.authService.updateRegistered(this.uid, "yes").then(() => {
-        this.route.navigateByUrl("spazaboard")
+
+      this.authService.updateRegistered(this.uid, "yes").then(async () => {
+        (await loading).dismiss();
+        this.route.navigateByUrl('profile')
       })
 
     }).catch(err => {
       alert(err.message)
     })
     this.urlPath = "";
+
   }
 
   update() {
@@ -226,7 +233,7 @@ export class SpazaformPage implements OnInit {
       photoURL: this.urlPath,
       lat: this.lat,
       lng: this.lng,
-     
+
     }).then(() => {
       console.log("updated")
       // this.route.navigateByUrl("spazaboard")
@@ -234,16 +241,16 @@ export class SpazaformPage implements OnInit {
         // message: 'You are to delete your comment',
         subHeader: 'Your Infor is successfully updated',
         buttons: [
-       
+
           {
             text: 'ok',
             handler: () => {
-            
+
             }
           }
         ]
       }).then(
-        alert=> alert.present()
+        alert => alert.present()
       );
 
     }).catch(err => {
@@ -252,7 +259,7 @@ export class SpazaformPage implements OnInit {
     this.urlPath = "";
   }
 
-  product(){
-    this.route.navigate(['productlistowner'], {queryParams: {spazauid : this.uid}});
+  product() {
+    this.route.navigate(['productlistowner'], { queryParams: { spazauid: this.uid } });
   }
 }

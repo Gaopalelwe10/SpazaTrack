@@ -1,0 +1,78 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start" (click)="close()">
+            <ion-button icon-only clear>
+                <ion-icon name="close"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-title>Edit Product</ion-title>
+
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <div class="images">
+
+        <br>
+
+        <img src="{{image}}" class="pp" width="300" height="200">
+
+
+        <div class="image-upload">
+
+            <ion-fab horizontal="center" class="fab">
+                <ion-fab-button color="primary">
+                    <ion-icon name="camera"> </ion-icon>
+                </ion-fab-button>
+                <ion-fab-list side="start">
+                    <ion-fab-button color="primary">
+                        <ion-icon name="camera" (click)="pickImage()" class="camera"> </ion-icon>
+                    </ion-fab-button>
+                </ion-fab-list>
+                <ion-fab-list side="end">
+                    <ion-fab-button color="primary">
+                        <label for="file-input62">
+                                            <ion-icon name="document" class="document"> </ion-icon>
+                                    </label>
+                    </ion-fab-button>
+                </ion-fab-list>
+            </ion-fab>
+            <input id="file-input62" class="input" type="file" (change)="upload($event)" />
+        </div>
+
+        <br><br>
+
+
+        <form [formGroup]="editForm">
+            <ion-item color="transparent" class="group">
+                <ion-label position="floating">Product Name</ion-label>
+                <ion-input type="text" placeholder="Product Name:" formControlName="Product" [value]="ProName" required></ion-input>
+            </ion-item>
+            <div class="error" *ngIf="editForm.get('Product').hasError('required') && editForm.get('Product').touched">
+                Please input your Product
+            </div>
+            <ion-item color="transparent" class="group">
+                <ion-label position="floating">Price</ion-label>
+                <ion-input type="number" placeholder="R 20.00" formControlName="price" [value]="Price"> </ion-input>
+            </ion-item>
+            <div class="error" *ngIf="editForm.get('price').hasError('required') && editForm.get('price').touched">
+                Please input your price
+            </div>
+
+            <ion-item color="transparent" class="group">
+                <ion-label position="floating">Type:</ion-label>
+                <ion-input placeholder="Type" formControlName="Type" [value]="Type"> </ion-input>
+            </ion-item>
+            <div class="error" *ngIf="editForm.get('Type').hasError('required') && editForm.get('Type').touched">
+                Please input your type
+            </div>
+
+            <br>
+
+            <ion-button size="full" color="primary" [disabled]="!editForm.valid" (click)="Update()">Update</ion-button>
+            <ion-button expand="full" color="primary" (click)="delete()">DELETE</ion-button>
+        </form>
+
+    </div>
+</ion-content>

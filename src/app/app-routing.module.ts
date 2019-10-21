@@ -26,7 +26,9 @@ const routes: Routes = [
   { path: 'updatecomment', loadChildren: './pages/updatecomment/updatecomment.module#UpdatecommentPageModule' },
   { path: 'addcomment', loadChildren: './pages/addcomment/addcomment.module#AddcommentPageModule' },
   { path: 'addproduct', loadChildren: './pages/addproduct/addproduct.module#AddproductPageModule' },
-  { path: 'productlistowner', loadChildren: './pages/productlistowner/productlistowner.module#ProductlistownerPageModule' }
+  { path: 'productlistowner', loadChildren: './pages/productlistowner/productlistowner.module#ProductlistownerPageModule' },
+  { path: 'editproduct', loadChildren: './pages/editproduct/editproduct.module#EditproductPageModule' },
+  { path: 'productlistcustomer', loadChildren: './pages/productlistcustomer/productlistcustomer.module#ProductlistcustomerPageModule' }
 
 ];
 

@@ -16,8 +16,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AddproductPage implements OnInit {
   spazauid
-  spazaRef: AngularFirestoreDocument<any>;
-  productRef: AngularFirestoreCollection<any>;
+
 
   uploads: FormGroup;
   picUrl1;
@@ -60,15 +59,13 @@ export class AddproductPage implements OnInit {
   }
 
   ngOnInit() {
-    this.spazaRef = this.afs.doc(`spazashop/${this.spazauid}`)
-    // this.postRef = this.afs.doc('posts/testPost')
-    this.productRef = this.spazaRef.collection('products', ref => ref.orderBy('createdAt', 'desc'))
+
   }
 
 
   upload(event) {
     const file = event.target.files[0];
-    this.uniqkey = 'PIC' + Math.random().toString(36).substring(2);;
+    this.uniqkey = 'PIC' + Math.random().toString(36).substring(2);
     const filePath = this.uniqkey;
     const fileRef = this.storage.ref(filePath);
     const task = this.storage.upload(filePath, file);

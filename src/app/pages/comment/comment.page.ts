@@ -8,6 +8,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { PopoverController, ModalController } from '@ionic/angular';
 import { PopoverPage } from '../popover/popover.page';
 import { AddcommentPage } from '../addcomment/addcomment.page';
+import { ProductlistcustomerPageModule } from '../productlistcustomer/productlistcustomer.module';
+import { ProductlistcustomerPage } from '../productlistcustomer/productlistcustomer.page';
 
 @Component({
   selector: 'app-comment',
@@ -127,5 +129,15 @@ export class CommentPage implements OnInit {
       translucent: true
     });
     return await popover.present();
+  }
+  async productlist(){
+    const modal = await this.modalController.create({
+      component: ProductlistcustomerPage,
+      componentProps:{
+        spazauid: this.spazauid,
+      },
+    });
+   
+    return await modal.present();
   }
 }
