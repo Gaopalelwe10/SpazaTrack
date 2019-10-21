@@ -32,4 +32,8 @@ export class SpazaService {
       rate:rate,
     });
   }
+
+  addproduct(Suid, product){
+    return this.afs.collection('spazashop').doc(Suid).collection('products').add(product);
+  }
 }

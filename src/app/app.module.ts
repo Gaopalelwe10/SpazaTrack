@@ -21,9 +21,10 @@ import { File } from '@ionic-native/file/ngx';
 import {HttpClientModule} from '@angular/common/http'
 import { PopoverPageModule } from './pages/popover/popover.module';
 import { AddcommentPage } from './pages/addcomment/addcomment.page';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared/shared.module';
 import { UpdatecommentPage } from './pages/updatecomment/updatecomment.page';
+import { AddproductPage } from './pages/addproduct/addproduct.page';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDMJCzNKJe3XDsfEdAPYnEAZWdsva0dTFU",
@@ -36,8 +37,8 @@ const firebaseConfig = {
 };
 
 @NgModule({
-  declarations: [AppComponent, AddcommentPage,  UpdatecommentPage],
-  entryComponents: [AddcommentPage,  UpdatecommentPage],
+  declarations: [AppComponent, AddcommentPage,  UpdatecommentPage, AddproductPage],
+  entryComponents: [AddcommentPage,  UpdatecommentPage, AddproductPage],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -49,7 +50,8 @@ const firebaseConfig = {
     HttpClientModule,
     PopoverPageModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ],
   providers: [
     StatusBar,

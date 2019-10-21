@@ -251,4 +251,8 @@ export class SpazaformPage implements OnInit {
     })
     this.urlPath = "";
   }
+
+  product(){
+    this.route.navigate(['productlistowner'], {queryParams: {spazauid : this.uid}});
+  }
 }

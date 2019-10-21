@@ -1,0 +1,30 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="home"></ion-back-button>
+        </ion-buttons>
+
+        <ion-title>Productlist</ion-title>
+
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item *ngFor="let pic of productList" (click)="produ(pic)">
+            <ion-thumbnail slot="start">
+                <ion-img [src]="pic.image" width="200" height="150" accept=".png,.jpg" imageViewer class="image1"></ion-img>
+            </ion-thumbnail>
+            <ion-label>
+                <h2>{{pic.ProName}} <span class="Edit">Edit</span></h2>
+                <h3>{{pic.Type}}</h3>
+                <p>R{{pic.Price}}</p>
+            </ion-label>
+        </ion-item>
+    </ion-list>
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+        <ion-fab-button color="primary" (click)="addproduct()">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>

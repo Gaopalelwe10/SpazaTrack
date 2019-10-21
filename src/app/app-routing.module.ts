@@ -24,7 +24,9 @@ const routes: Routes = [
   { path: 'spazaboard', loadChildren: './pages/spazaboard/spazaboard.module#SpazaboardPageModule' },  { path: 'comment', loadChildren: './pages/comment/comment.module#CommentPageModule' },
   { path: 'popover', loadChildren: './pages/popover/popover.module#PopoverPageModule' },
   { path: 'updatecomment', loadChildren: './pages/updatecomment/updatecomment.module#UpdatecommentPageModule' },
-  { path: 'addcomment', loadChildren: './pages/addcomment/addcomment.module#AddcommentPageModule' }
+  { path: 'addcomment', loadChildren: './pages/addcomment/addcomment.module#AddcommentPageModule' },
+  { path: 'addproduct', loadChildren: './pages/addproduct/addproduct.module#AddproductPageModule' },
+  { path: 'productlistowner', loadChildren: './pages/productlistowner/productlistowner.module#ProductlistownerPageModule' }
 
 ];
 
