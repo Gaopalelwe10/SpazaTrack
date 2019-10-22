@@ -7,7 +7,7 @@
 
         <ion-title *ngIf="!isSearchbar">Spazaboard</ion-title>
 
-        <ion-searchbar showCancelButton="always" (ionCancel)="isSearchbar=false" *ngIf="isSearchbar" (ionInput)="filterList($event)"></ion-searchbar>
+        <ion-searchbar showCancelButton="always" (ionCancel)="isSearchbar=false" *ngIf="isSearchbar" (ionInput)="filterList($event)" placeholder="spazaName , Address"></ion-searchbar>
 
         <ion-buttons slot="end" (click)="isSearchbar= true" *ngIf="!isSearchbar">
             <ion-icon name="search" slot="end" class="searchIon"></ion-icon>

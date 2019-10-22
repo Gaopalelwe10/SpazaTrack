@@ -18,7 +18,9 @@
             </div>
 
             <div *ngIf="spaza.photoURL !=''">
-                <ion-img [src]="spaza.photoURL" (click)="zoom(spaza)"></ion-img>
+                <!-- <ion-img [src]="spaza.photoURL" (click)="zoom(spaza)"></ion-img> -->
+                <img src="{{spaza.photoURL}}">
+
             </div>
             <!-- <ion-card-header>
                 <ion-card-subtitle>{{ spaza.Discription }}</ion-card-subtitle>
@@ -94,8 +96,8 @@
                             </ion-avatar>
                             <ion-avatar slot="start" *ngIf="user.photoURL !='' ">
 
-                                <ion-img [src]="user.photoURL"></ion-img>
-
+                                <!-- <ion-img [src]="user.photoURL"></ion-img> -->
+                                <img src="{{user.photoURL}}" width="200" height="150" class="image1">
                             </ion-avatar>
 
                             <ion-label>

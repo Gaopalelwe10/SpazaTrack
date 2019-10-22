@@ -27,7 +27,9 @@ export class HomePage {
   destinationPosition: string;
 
   value: any;
-  isSlide :boolean =true;
+  isSlide: boolean = true;
+  lat;
+  lng;
   constructor(
     public menuCtrl: MenuController,
     private authService: AuthService,
@@ -35,15 +37,14 @@ export class HomePage {
     public spazaService: SpazaService,
     private route: Router,
     public loadingCtrl: LoadingController
-    ) 
-    {
+  ) {
 
     spazaService.getSpazas().subscribe((data) => {
       this.spazalist = data;
       this.spazaload = data;
     })
 
-    }
+  }
 
 
   ionViewWillEnter() {
@@ -67,9 +68,9 @@ export class HomePage {
   initializeMapBox() {
     // or "const mapboxgl = require('mapbox-gl');"
     mapboxgl.accessToken = 'pk.eyJ1Ijoibm51bnUiLCJhIjoiY2p4cTIxazB3MG0wYTNncm4wanF0cDVjaiJ9.v0khvZZss9z_U2MroA2PVQ';
-    const map = new mapboxgl.Map({
+    this.map = new mapboxgl.Map({
       container: this.mapNativeElement.nativeElement,
-      style: 'mapbox://styles/mapbox/streets-v9',
+      style: 'mapbox://styles/mapbox/streets-v11',
       zoom: 10,
       // center: [lng, lat],
       center: [28.218370, -25.731340]
@@ -87,9 +88,9 @@ export class HomePage {
     });
 
 
-    map.addControl(this.geocoder);
+    this.map.addControl(this.geocoder);
 
-    this.geocoder.on('result', (ev)=> {
+    this.geocoder.on('result', (ev) => {
       console.log(ev.result.text)
       this.value = ev.result.text;
       this.search(ev.result.text)
@@ -101,18 +102,18 @@ export class HomePage {
 
     this.geolocation.getCurrentPosition()
       .then((response) => {
-        
+
         this.startPosition = response.coords;
         // this.originPosition= response.Address;
-        map.setCenter([this.startPosition.longitude, this.startPosition.latitude]);
+        this.map.setCenter([this.startPosition.longitude, this.startPosition.latitude]);
 
         var marker = new mapboxgl.Marker()
           .setLngLat([this.startPosition.longitude, this.startPosition.latitude])
-          .setPopup(new mapboxgl.Popup({ offset: 25 }) 
-          .setHTML('<p>' + this.startPosition.Address + '</p> '))
-          .addTo(map);
+          // .setPopup(new mapboxgl.Popup({ offset: 25 })
+          //   .setHTML('<p>' + this.startPosition.Address + '</p> '))
+          .addTo(this.map);
       })
-   
+
 
     // load coodinates from database
     this.spazaService.getSpazas().subscribe((markers: any) => {
@@ -129,11 +130,28 @@ export class HomePage {
           .setLngLat([element.lng, element.lat])
           .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
             .setHTML('<p>' + element.Address + '</p> <p>Spaza Name: ' + element.spazaName + '</p>'))
-          .addTo(map);
+          .addTo(this.map);
       });
     })
 
-    
+
+  }
+  trackShop(shop) {
+    this.lat = shop.lat;
+    this.lng = shop.lng;
+    console.log(this.lng);
+    console.log(this.lat);
+    this.map.setCenter([this.lng, this.lat]);
+    const el = document.createElement('div');
+    el.className = 'marker';
+    el.style.backgroundImage = 'url(assets/img/icons8.png)';
+    el.style.width = '40px';
+    el.style.height = '40px';
+    var marker = new mapboxgl.Marker(el)
+      .setLngLat([this.lng, this.lat])
+      .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+            .setHTML('<p>' + shop.Address + '</p> <p>Spaza Name: ' + shop.spazaName + '</p>'))
+      .addTo(this.map);
   }
 
   search(evt) {

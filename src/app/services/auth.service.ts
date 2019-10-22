@@ -196,45 +196,32 @@ export class AuthService {
     });
   }
 
+  
+
   uploadToFirebase(_imageBlobInfo) {
     console.log('uploadToFirebase');
     return new Promise((resolve, reject) => {
-      const fileRef = firebase.storage().ref('images/' + _imageBlobInfo.fileName);
+      const fileRef = this.storage.ref('images/' + _imageBlobInfo.fileName);
       const uploadTask = fileRef.put(_imageBlobInfo.imgBlob);
-      uploadTask.on(
-        'state_changed',
-        (_snapshot: any) => {
-          console.log(
-            'snapshot progess ' +
-            (_snapshot.bytesTransferred / _snapshot.totalBytes) * 100
-          );
-          this.progress = (_snapshot.bytesTransferred / _snapshot.totalBytes) * 100;
-          if (this.progress === 100) {
-            fileRef.getDownloadURL().then(urlPath => {
-              // this.profileUser.imageUrl = url;
-              // console.log('profile', this.profileUser.key);
-              this.afs.doc('users/' + this.getUID()).update({
-                photoURL: urlPath
-              })
-              console.log('downloadurl', urlPath);
-              this.progress = null;
-              console.log('profile');
-              //  this.profileService.updateImage(this.profileUser);
-            });
-          }
-        },
-        _error => {
-          console.log(_error);
-          reject(_error);
-        },
-        () => {
-          // completion...
-          resolve(uploadTask.snapshot);
-        }
-      );
-    });
 
-  }
+     
+
+      uploadTask.snapshotChanges().pipe(
+        finalize(() => {
+          this.downloadU =fileRef.getDownloadURL().subscribe(url => {
+            console.log(url);
+            console.log("done upl")
+            this.afs.doc('users/' + this.getUID()).update({
+              photoURL: url,
+            })
+            this.uploadPercent = null;
+        
+          });
+        })
+      ).subscribe();  
+      return  this.uploadPercent = uploadTask.percentageChanges();
+    });
+   }
 
   zoom(url) {
     this.Viewer.show(url.photoURL, "", { share: true, copyToReference: true });

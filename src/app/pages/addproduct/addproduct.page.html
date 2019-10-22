@@ -15,12 +15,12 @@
 
     <div class="profile-image">
         <br>
-        <div *ngIf="urlPath =='' ">
+        <div *ngIf="image =='' ">
             <img src="/assets/img/thumbnail.svg">
 
         </div>
-        <div *ngIf="urlPath !='' ">
-            <img data-src="{{urlPath}}">
+        <div *ngIf="image !='' ">
+            <img data-src="{{image}}">
             <!-- <div *ngIf="(uploadPercent | async ) >0 && (uploadPercent | async ) !=''"> -->
 
         </div>
@@ -52,7 +52,9 @@
     </div>
 
 
-
+    <div class="spinner" *ngIf="((uploadPercent | async ) >0 && (uploadPercent | async ) !='') || (progress>0 && progress !=100)">
+        <ion-spinner name="crescent" color="success"></ion-spinner>
+    </div>
 
 
 

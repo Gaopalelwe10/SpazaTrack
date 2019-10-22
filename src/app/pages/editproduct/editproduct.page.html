@@ -40,8 +40,8 @@
                 <ion-fab-list side="end">
                     <ion-fab-button color="primary">
                         <label for="file-input1223">
-                                                <ion-icon name="document" class="document"> </ion-icon> 
-                                        </label>
+                            <ion-icon name="document" class="document"> </ion-icon> 
+                        </label>
                     </ion-fab-button>
                 </ion-fab-list>
 
@@ -51,7 +51,9 @@
             <input id="file-input1223" class="input" type="file" (change)="upload($event)" />
         </div>
     </div>
-
+    <div class="spinner" *ngIf="((uploadPercent | async ) >0 && (uploadPercent | async ) !='') || (progress>0 && progress !=100)">
+        <ion-spinner name="crescent" color="success"></ion-spinner>
+    </div>
 
 
     <form [formGroup]="editForm">

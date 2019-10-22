@@ -16,11 +16,11 @@
 
 
         <ion-item *ngFor="let pic of productList">
-            <ion-thumbnail slot="start">
-                <ion-img [src]="pic.image" width="200" height="150" class="image1"></ion-img>
+            <ion-thumbnail slot="start" (click)="zoom(pic)">
+                <img src="{{pic.image}}" width="200" height="150" class="image1">
             </ion-thumbnail>
             <ion-label>
-                <h2>{{pic.ProName}} <span class="Edit">Edit</span></h2>
+                <h2>{{pic.ProName}}</h2>
                 <h3>{{pic.Type}}</h3>
                 <p>R{{pic.Price}}</p>
             </ion-label>

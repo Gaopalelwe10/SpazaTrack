@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestoreDocument, AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { NavParams, ModalController, AlertController } from '@ionic/angular';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-productlistcustomer',
@@ -19,7 +20,8 @@ export class ProductlistcustomerPage implements OnInit {
     private afs: AngularFirestore,
     private navParams: NavParams,
     public modalCtrl: ModalController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private authService : AuthService
   ) {
     this.spazauid = this.navParams.get('spazauid');
   }
@@ -66,5 +68,8 @@ export class ProductlistcustomerPage implements OnInit {
 
   close() {
     this.modalCtrl.dismiss();
+  }
+  zoom(user){
+    this.authService.zoom(user)
   }
 }
