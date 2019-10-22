@@ -23,7 +23,7 @@ export class AddproductPage implements OnInit {
   uploadPercent: Observable<number>;
   downloadU: any;
   uniqkey: any;
-  urlPath;
+  urlPath='';
 
   product = {
     image: "",
@@ -49,8 +49,8 @@ export class AddproductPage implements OnInit {
 
       });
 
-    this.picUrl1 = 'https://feedback.seekingalpha.com/s/cache/da/0c/da0c3cbb1bced750fc60725f81ad275e.png'
-
+    this.picUrl1 = '/assets/img/thumbnail.svg'
+    
     this.uploads = fb.group({
       Product: ['', Validators.required],
       price: ['', Validators.required],
@@ -95,7 +95,7 @@ export class AddproductPage implements OnInit {
     this.spazaService.addproduct(this.spazauid, this.product).then(() => {
       this.alertCtrl.create({
         // message: 'You are to delete your comment',
-        subHeader: 'Product Added to Grocery',
+        subHeader: 'Added to product list',
         buttons: [
 
           {

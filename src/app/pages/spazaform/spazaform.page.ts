@@ -43,7 +43,7 @@ export class SpazaformPage implements OnInit {
 
 
 
-  urlPath: any = '';
+  urlPath= '';
   list: any;
 
   lng;

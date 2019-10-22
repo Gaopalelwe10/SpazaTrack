@@ -13,71 +13,80 @@
 
 <ion-content class="ion-padding">
 
-
-
-    <div class="images">
-
+    <div class="profile-image">
         <br>
+        <div *ngIf="urlPath =='' ">
+            <img src="/assets/img/thumbnail.svg">
 
-        <img src="{{urlPath}}{{picUrl1}}" class="pp" width="300" height="200">
+        </div>
+        <div *ngIf="urlPath !='' ">
+            <img data-src="{{urlPath}}">
+            <!-- <div *ngIf="(uploadPercent | async ) >0 && (uploadPercent | async ) !=''"> -->
 
-
+        </div>
         <div class="image-upload">
-
-            <ion-fab horizontal="center" class="fab">
+            <ion-fab horizontal="center" vertical="top" class="fab">
                 <ion-fab-button color="primary">
-                    <ion-icon name="camera"> </ion-icon>
+                    <ion-icon name="camera" class="input"> </ion-icon>
                 </ion-fab-button>
+
                 <ion-fab-list side="start">
                     <ion-fab-button color="primary">
                         <ion-icon name="camera" (click)="pickImage()" class="camera"> </ion-icon>
                     </ion-fab-button>
                 </ion-fab-list>
+
                 <ion-fab-list side="end">
                     <ion-fab-button color="primary">
-                        <label for="file-input65">
-                                            <ion-icon name="document" class="document"> </ion-icon>
-                                    </label>
+                        <label for="file-input122">
+                                                <ion-icon name="document" class="document"> </ion-icon> 
+                                        </label>
                     </ion-fab-button>
                 </ion-fab-list>
+
             </ion-fab>
-            <input id="file-input65" class="input" type="file" (change)="upload($event)" />
+
+
+            <input id="file-input122" class="input" type="file" (change)="upload($event)" />
+        </div>
+    </div>
+
+
+
+
+
+
+    <form [formGroup]="uploads">
+        <ion-item color="transparent" class="group">
+            <ion-label position="floating">Product Name</ion-label>
+            <ion-input type="text" placeholder="Product Name:" formControlName="Product" required></ion-input>
+        </ion-item>
+        <div class="error" *ngIf="uploads.get('Product').hasError('required') && uploads.get('Product').touched">
+            Please input your Product
+        </div>
+        <ion-item color="transparent" class="group">
+            <ion-label position="floating">Price</ion-label>
+            <ion-input type="number" placeholder="R 20.00" formControlName="price"> </ion-input>
+        </ion-item>
+        <div class="error" *ngIf="uploads.get('price').hasError('required') && uploads.get('price').touched">
+            Please input your price
         </div>
 
-        <br><br>
+        <ion-item color="transparent" class="group">
+            <ion-label position="floating">Type:</ion-label>
+            <ion-input placeholder="Type" formControlName="Type"> </ion-input>
+        </ion-item>
+        <div class="error" *ngIf="uploads.get('Type').hasError('required') && uploads.get('Type').touched">
+            Please input your type
+        </div>
+
+        <br>
+
+        <ion-button size="full" color="primary" [disabled]="!uploads.valid" (click)="add()">Add Product</ion-button>
+
+    </form>
 
 
-        <form [formGroup]="uploads">
-            <ion-item color="transparent" class="group">
-                <ion-label position="floating">Product Name</ion-label>
-                <ion-input type="text" placeholder="Product Name:" formControlName="Product" required></ion-input>
-            </ion-item>
-            <div class="error" *ngIf="uploads.get('Product').hasError('required') && uploads.get('Product').touched">
-                Please input your Product
-            </div>
-            <ion-item color="transparent" class="group">
-                <ion-label position="floating">Price</ion-label>
-                <ion-input type="number" placeholder="R 20.00" formControlName="price"> </ion-input>
-            </ion-item>
-            <div class="error" *ngIf="uploads.get('price').hasError('required') && uploads.get('price').touched">
-                Please input your price
-            </div>
-
-            <ion-item color="transparent" class="group">
-                <ion-label position="floating">Type:</ion-label>
-                <ion-input placeholder="Type" formControlName="Type"> </ion-input>
-            </ion-item>
-            <div class="error" *ngIf="uploads.get('Type').hasError('required') && uploads.get('Type').touched">
-                Please input your type
-            </div>
-
-            <br>
-
-            <ion-button size="full" color="primary" [disabled]="!uploads.valid" (click)="add()">Add Products</ion-button>
-
-        </form>
-
-    </div>
 
 
 </ion-content>

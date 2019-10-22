@@ -11,9 +11,7 @@
 
 <ion-content>
     <ion-list>
-        <div *ngIf="productList==0">
-            Pleace add Products of your Spaza
-        </div>
+
         <ion-item *ngFor="let pic of productList">
             <ion-thumbnail slot="start">
                 <ion-img [src]="pic.image" width="200" height="150" class="image1"></ion-img>

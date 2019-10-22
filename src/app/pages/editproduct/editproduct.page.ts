@@ -18,7 +18,7 @@ export class EditproductPage implements OnInit {
   }
   editForm: FormGroup
   key;
-  image;
+  image='';
   ProName;
   Price;
   Type;
