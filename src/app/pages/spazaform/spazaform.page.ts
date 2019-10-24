@@ -159,7 +159,10 @@ export class SpazaformPage implements OnInit {
       this.addresses = [];
     }
   }
-
+  clear(){
+    this.addresses = []
+    console.log("hello")
+  }
   onSelect(address, i) {
     this.selectedAddress = address;
     //  selectedcoodinates=

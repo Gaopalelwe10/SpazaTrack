@@ -76,11 +76,11 @@
 
                     <ion-item color="transparent" class="group">
                         <ion-label position="floating">Address</ion-label>
-                        <ion-input type="text" formControlName="Address" (ionInput)="search($event)" [value]="selectedAddress" clearInput></ion-input>
+                        <ion-input type="text" formControlName="Address" (ionChange)="search($event)" [value]="selectedAddress" clearInput></ion-input>
                     </ion-item>
 
 
-                    <div style="position: absolute;width: 100%;z-index: 999; " class="search">
+                    <div style="position: absolute; max-width: 90%; min-width: 90%; z-index: 999; " class="search">
                         <ion-list lines="none" *ngIf="addresses.length > 0" color="lightb" style="background: var(--ion-item-background,var(--ion-background-color, black)); ">
 
                             <ion-item *ngFor="let address of addresses ; let i=index" (click)="onSelect(address, i)" color="dark">
@@ -235,7 +235,7 @@
                     </ion-item>
 
 
-                    <div style="position: absolute;width: 100%;z-index: 999; ">
+                    <div style="position: absolute;max-width: 90%; min-width: 90%;z-index: 999; ">
                         <ion-list lines="none" *ngIf="addresses.length > 0" color="lightb" style="background: var(--ion-item-background,var(--ion-background-color, black)); ">
 
                             <ion-item *ngFor="let address of addresses ; let i=index" (click)="onSelect(address, i)" color="dark">
@@ -307,9 +307,11 @@
                         <ion-button expand="block" color="primary" (click)="product()">Product</ion-button>
                     </div>
                 </div>
+
             </div>
 
         </form>
+
     </div>
 
     <!-- <ion-searchbar (ionInput)="search($event)" [value]="selectedAddress"></ion-searchbar> -->
