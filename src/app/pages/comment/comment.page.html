@@ -35,14 +35,14 @@
                 </ion-item>
                 <ion-item color="lightb" lines="none">
                     <ion-icon name="time" slot="start" color="primary"></ion-icon>
-                    <ion-text>{{spaza.Hours}}</ion-text>
+                    <ion-text>{{spaza.Hours | date:'HH:mm a'}} - {{spaza.Close | date:'HH:mm a'}}</ion-text>
                 </ion-item>
                 <ion-item color="lightb" lines="none">
                     <ion-icon name="call" slot="start" color="primary"></ion-icon>
                     <ion-text>{{spaza.Number}}</ion-text>
                 </ion-item>
                 <ion-item color="lightb" lines="none">
-                    <ion-text> Total Comments: {{ spaza.commentCount }} </ion-text>
+                    <ion-text slot="start"> Total Comments: {{ spaza.commentCount }} </ion-text>
                     <ion-text slot="end" color="primary" (click)="productlist()">View Products</ion-text>
                 </ion-item>
 
@@ -112,7 +112,7 @@
 
                         </ion-item>
                         <ion-card-content>
-                            <p color="light">{{ comment.createdAt |date: 'medium' }}</p>
+                            <p color="light">{{ comment.createdAt?.toDate() | date: 'MMM d, y, HH:mm a' }}</p>
                             <h5>{{ comment.content }}</h5>
                         </ion-card-content>
                     </ion-card>
@@ -153,7 +153,7 @@
 
                         </ion-item>
                         <ion-card-content>
-                            <p color="light">{{ comment.createdAt |date: 'medium' }}</p>
+                            <p color="light">{{ comment.createdAt?.toDate() | date: 'MMM d, y, HH:mm a' }}</p>
                             <h5>{{ comment.content }}</h5>
                         </ion-card-content>
                     </ion-card>

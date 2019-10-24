@@ -40,14 +40,15 @@
                                 {{spaza.commentCount}} review
                             </p>
 
-                            <p class="font">
+                            <p class="font ad">
                                 {{spaza.Address}}
                             </p>
                             <p class="font">
-                                {{spaza.Hours}}
+                                {{spaza.Hours | date:'HH:mm a'}} - {{spaza.Close | date:'HH:mm a'}}
                                 <!-- <ion-icon name="call" slot="end" class="call" color="primary"></ion-icon> -->
+                                <span class="right"> <span  (click)="comment(spaza)">View more</span> &nbsp; &nbsp; &nbsp; <span (click)="trackShop(spaza)">Direction</span></span>
                             </p>
-                            <p class="right"><span (click)="comment(spaza)">View more</span> &nbsp; &nbsp; &nbsp; <span (click)="trackShop(spaza)">Direction</span></p>
+                            <p></p>
                         </ion-card-content>
                     </ion-card>
 

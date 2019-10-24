@@ -19,12 +19,6 @@ input {
     width: 100%;
 }
 
-p {
-    text-align: left;
-    // font-size: 2vh;
-    font-size: 10px;
-}
-
 ion-card {
     width: 90% !important;
     // background: #20727de1;
@@ -59,3 +53,11 @@ ion-card {
     font-weight: bold;
     font-size: 12px;
 }
+
+p {
+    text-align: left;
+    // font-size: 2vh;
+    font-size: 11px;
+}
+
+.ad {}

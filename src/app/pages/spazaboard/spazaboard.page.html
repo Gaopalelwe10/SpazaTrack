@@ -34,7 +34,7 @@
                 {{spaza.Address}}
             </p>
             <p class="font">
-                {{spaza.Hours}}
+                {{spaza.Hours | date:'HH:mm a'}} - {{spaza.Close | date:'HH:mm a'}}
                 <!-- <ion-icon name="call" slot="end" class="call" color="primary"></ion-icon> -->
             </p>
         </ion-card-content>

@@ -3,7 +3,9 @@ import { NavController, ModalController, NavParams, AlertController } from '@ion
 import { Observable } from 'rxjs';
 import { AngularFirestoreCollection, AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
-
+import * as  firebase from 'firebase';
+import * as moment from 'moment';
+import 'moment/locale/pt-br';
 @Component({
   selector: 'app-addcomment',
   templateUrl: './addcomment.page.html',
@@ -20,14 +22,14 @@ export class AddcommentPage implements OnInit {
   isRate: boolean = false;
   spazauid;
   uid
-
+  date = moment();
   constructor(public navCtrl: NavController,
     public modalCtrl: ModalController,
     private afs: AngularFirestore,
     private afAuth: AngularFireAuth,
     private navParams: NavParams,
     private alertCtrl: AlertController,
-    ) {
+  ) {
 
     this.uid = this.afAuth.auth.currentUser.uid;
     this.rate = this.navParams.get('rate');
@@ -44,7 +46,10 @@ export class AddcommentPage implements OnInit {
     // this.postRef = this.afs.doc('posts/testPost')
     this.commentsRef = this.spazaRef.collection('comments', ref => ref.orderBy('createdAt', 'desc'))
   }
-
+  test() {
+    console.log(moment.locale());
+    console.log(this.date.toDate());
+  }
 
   async onModelChange(ev) {
     this.rate = ev;
@@ -61,7 +66,7 @@ export class AddcommentPage implements OnInit {
 
   addComment() {
     this.isRate = false;
-    this.commentsRef.add({ content: this.text, rate: this.rate, createdAt: Date.now(), uid: this.uid }).then(() => {
+    this.commentsRef.add({ content: this.text, rate: this.rate, createdAt: this.date.toDate(), uid: this.uid }).then(() => {
       this.close();
       // this.alertCtrl.create({
       //   // message: 'You are to delete your comment',

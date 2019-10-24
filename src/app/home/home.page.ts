@@ -83,7 +83,7 @@ export class HomePage {
       marker: {
         color: 'orange'
       },
-      // placeholder: 'Search for places ', // Placeholder text for the search bar
+      placeholder: 'Search for places ', // Placeholder text for the search bar
       // Coordinates of UC Berkeley
     });
 

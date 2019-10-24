@@ -41,5 +41,6 @@ export class SpazaService {
   }
   deleteprodduct(sid , pid){
     return this.afs.collection('spazashop').doc(sid).collection('products').doc(pid).delete();
+  
   }
 }
