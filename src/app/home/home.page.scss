@@ -61,3 +61,23 @@ p {
 }
 
 .ad {}
+.directions-control {
+    position: relative;
+    margin: 7px 0 0;
+    color: #fff;
+    width: 260px;
+    height: 450px;
+    top: 125px;
+    bottom: 0;
+   left: 10px;
+    background-color: rgba(0,0,0,0.75);
+    border-radius: 1.75%;
+    // overflow-y: scroll;
+    font-family: sans-serif;
+    // font-size: 0.8em;
+    // line-height: 2em;
+  }
+  .directions-control-directions{
+    width: 260px;
+    max-width: 260px;
+}
