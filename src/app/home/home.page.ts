@@ -8,6 +8,9 @@ import { SpazaService } from '../services/spaza.service';
 import {HttpClient} from '@angular/common/http'
 import { database } from 'firebase';
 import { Router } from '@angular/router';
+import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator/ngx';
+
+
 
 @Component({
   selector: 'app-home',
@@ -43,7 +46,10 @@ export class HomePage {
   finalDuration;
   steps : any = [];
   jotPos : any = [];
+  plotLng;
+  plotLat;
   constructor(
+    private launchNavigator: LaunchNavigator, 
     private http : HttpClient,
     public menuCtrl: MenuController,
     private authService: AuthService,
@@ -64,7 +70,46 @@ export class HomePage {
   ionViewWillEnter() {
     this.menuCtrl.enable(true);
   }
+  navigate(){
+    console.log("**")
 
+    this.geolocation.getCurrentPosition()
+      .then((response) => {
+
+        this.startPosition = response.coords;
+        // this.originPosition= response.Address;
+        this.map.setCenter([this.startPosition.longitude, this.startPosition.latitude]);
+        this.plotLat = this.startPosition.latitude;
+        this.plotLng = this.startPosition.longitude;
+        const el = document.createElement('div');
+        el.className = 'marker';
+        el.style.backgroundImage = 'url(assets/img/icon.jpg)';
+        el.style.width = '40px';
+        el.style.height = '40px';
+
+        var marker = new mapboxgl.Marker(el)
+          .setLngLat([this.startPosition.longitude, this.startPosition.latitude])
+          // .setPopup(new mapboxgl.Popup({ offset: 25 })
+          //   .setHTML('<p>' + this.startPosition.Address + '</p> '))
+          .addTo(this.map);
+      })
+      console.log(this.plotLng+" && "+this.plotLat)
+    this.launchNavigator.navigate([50.279306, -5.163158], {
+      start: "50.342847, -4.749904"
+  });
+  //   launchavigator.isAppAvailable(this.launchNavigator.APP.GOOGLE_MAPS, function(isAvailable){
+  //     var app;
+  //     if(isAvailable){
+  //         app = this.launchNavigator.APP.GOOGLE_MAPS;
+  //     }else{
+  //         console.warn("Google Maps not available - falling back to user selection");
+  //         app = this.launchNavigator.APP.USER_SELECT;
+  //     }
+  //     this.launchNavigator.navigate("London, UK", {
+  //         app: app
+  //     });
+  // });
+   }
 
   ionViewDidEnter() {
     //   const loading = this.loadingCtrl.create({

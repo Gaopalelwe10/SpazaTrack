@@ -28,6 +28,9 @@ import { AddproductPage } from './pages/addproduct/addproduct.page';
 import { EditproductPage } from './pages/editproduct/editproduct.page';
 import { ProductlistcustomerPageModule } from './pages/productlistcustomer/productlistcustomer.module';
 import { ProductlistcustomerPage } from './pages/productlistcustomer/productlistcustomer.page';
+import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator/ngx';
+
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyDMJCzNKJe3XDsfEdAPYnEAZWdsva0dTFU",
@@ -76,7 +79,8 @@ const firebaseConfig = {
     PhotoViewer,
     Geolocation ,
     Camera,
-    File
+    File,
+    LaunchNavigator
   ],
   bootstrap: [AppComponent],
 })
