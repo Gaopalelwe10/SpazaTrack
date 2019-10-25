@@ -181,7 +181,7 @@ export class HomePage {
     this.map.setCenter([this.lng, this.lat]);
     const el = document.createElement('div');
     el.className = 'marker';
-    el.style.backgroundImage = 'url(assets/img/pin.jpg)';
+    el.style.backgroundImage = 'url(assets/img/pin.png)';
     el.style.width = '40px';
     el.style.height = '40px';
     var marker = new mapboxgl.Marker(el)
