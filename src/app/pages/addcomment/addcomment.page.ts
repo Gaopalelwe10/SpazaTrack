@@ -66,7 +66,12 @@ export class AddcommentPage implements OnInit {
 
   addComment() {
     this.isRate = false;
-    this.commentsRef.add({ content: this.text, rate: this.rate, createdAt: this.date.toDate(), uid: this.uid }).then(() => {
+    this.commentsRef.add({
+      content: this.text,
+      rate: this.rate, 
+      createdAt: this.date.format('MMM DD, YYYY, HH:mm A'),
+      uid: this.uid
+    }).then(() => {
       this.close();
       // this.alertCtrl.create({
       //   // message: 'You are to delete your comment',
