@@ -31,7 +31,16 @@
                     Email address invalid
                 </div>
 
-
+                <ion-item color="transparent" class="group">
+                    <ion-label position="floating">Gender</ion-label>
+                    <ion-select formControlName="gender">
+                        <ion-select-option value="Female">Female</ion-select-option>
+                        <ion-select-option value="Male">Male</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <div class="error" *ngIf="register.get('gender').hasError('required') && register.get('gender').touched">
+                    Please please select gender
+                </div>
                 <ion-item color="transparent" class="group">
                     <ion-label position="floating">Address</ion-label>
                     <ion-input type="text" formControlName="address"></ion-input>

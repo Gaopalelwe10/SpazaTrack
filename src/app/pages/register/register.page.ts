@@ -28,6 +28,7 @@ export class RegisterPage implements OnInit {
       username: ['', Validators.compose([Validators.pattern('[a-zA-Z ]*'), Validators.minLength(4), Validators.maxLength(30), Validators.required])],
       // surname: ['', Validators.compose([Validators.pattern('[a-zA-Z ]*'), Validators.minLength(4), Validators.maxLength(30),Validators.required])],
       address: ['', Validators.required],
+      gender: ['', Validators.required],
       email: ['', Validators.compose([Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'), Validators.required])],
       password: ['', Validators.compose([Validators.minLength(6), Validators.maxLength(12), Validators.required])],
       cpassword: ['', Validators.required]
@@ -42,24 +43,25 @@ export class RegisterPage implements OnInit {
 
   async PersonRegister() {
 
-    
 
-    this.authService.signup(this.register.value.email, this.register.value.password).then( () => {
+
+    this.authService.signup(this.register.value.email, this.register.value.password).then(() => {
       this.afs.collection('users').doc(this.afAuth.auth.currentUser.uid).set({
         displayName: this.register.value.username,
         uid: this.afAuth.auth.currentUser.uid,
         Timestamp: Date.now(),
         Email: this.register.value.email,
         Address: this.register.value.address,
+        gender: this.register.value.gender,
         photoURL: '',
         Registered: "no",
       }).then(() => {
         this.nav.navigateRoot('home');
       }).catch(err => {
-        
+
         alert(err.message)
       });
-      
+
     });
   }
   login() {
