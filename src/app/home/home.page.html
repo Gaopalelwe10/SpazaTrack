@@ -13,11 +13,11 @@
 
     <div class="directions-control directions-control-directions" id="close" *ngIf="isDirection">
         <div class="mapbox-directions-component mapbox-directions-route-summary" style="position: sticky;top: 0;">
-            
+
             <ion-icon name="close-circle-outline" class="close" (click)="directionClose()" float-right></ion-icon>
             <h1> distance {{finalDuration}} KM</h1>
             <span>Time {{finalDistance}} Mins</span>
-           
+
         </div>
 
         <div class="mapbox-directions-instructions" *ngFor="let item of steps; let i =index" (click)="jotPip(item)">
@@ -29,20 +29,20 @@
                         <!-- <span class="directions-icon   directions-icon-{{item.maneuver.type}} directions-icon-{{item.maneuver.modifier}}"   >
                               
                         </span> -->
-                        
-                                <p>{{item.maneuver.instruction}}</p>
-                                
-                                <p>{{(item.distance / 1000).toFixed(2) }}  KM</p>
-                       
-                        
+
+                        <p>{{item.maneuver.instruction}}</p>
+
+                        <p>{{(item.distance / 1000).toFixed(2) }} KM</p>
+
+
                     </li>
-                   
+
                 </ul>
             </div>
         </div>
     </div>
     <div class="bot">
-        
+
         <div class="arrow">
             <ion-icon color="primary" name="arrow-dropdown" (click)="isSlide=false" *ngIf="isSlide"></ion-icon>
             <ion-icon color="primary" name="arrow-dropup" (click)="isSlide=true" *ngIf="!isSlide"></ion-icon>
@@ -75,7 +75,7 @@
                             <p class="font">
                                 {{spaza.Hours | date:'HH:mm a'}} - {{spaza.Close | date:'HH:mm a'}}
                                 <!-- <ion-icon name="call" slot="end" class="call" color="primary"></ion-icon> -->
-                                <span class="right"> <span  (click)="comment(spaza)">View more</span> &nbsp; &nbsp; &nbsp; <span (click)="navigate()">Direction</span></span>
+                                <span class="right"> <span  (click)="comment(spaza)">View more</span> &nbsp; &nbsp; &nbsp; <span (click)="navigate(spaza)">Direction</span></span>
                             </p>
                             <p></p>
                         </ion-card-content>

@@ -193,31 +193,51 @@ export class AddproductPage implements OnInit {
 
 
   add() {
-    this.product.createdAt = Date.now();
-    this.product.image = this.image;
-    this.product.Price = this.uploads.value.price;
-    this.product.ProName = this.uploads.value.Product;
-    this.product.Type = this.uploads.value.Type;
 
-    console.log(this.product)
-    this.spazaService.addproduct(this.spazauid, this.product).then(() => {
+    if(this.image == ''){
       this.alertCtrl.create({
-        // message: 'You are to delete your comment',
-        subHeader: 'Added to product list',
+        // message: 'Please upload an image',
+        subHeader: 'Please upload an image',
         buttons: [
 
           {
             text: 'ok',
             handler: () => {
-              this.close();
+
             }
           }
         ]
       }).then(
         alert => alert.present()
       );
-    })
-
+    }else{
+      this.product.createdAt = Date.now();
+      this.product.image = this.image;
+      this.product.Price = this.uploads.value.price;
+      this.product.ProName = this.uploads.value.Product;
+      this.product.Type = this.uploads.value.Type;
+  
+      console.log(this.product)
+      this.spazaService.addproduct(this.spazauid, this.product).then(() => {
+        this.alertCtrl.create({
+          // message: 'You are to delete your comment',
+          subHeader: 'Added to product list',
+          buttons: [
+  
+            {
+              text: 'ok',
+              handler: () => {
+                this.close();
+              }
+            }
+          ]
+        }).then(
+          alert => alert.present()
+        );
+      })
+  
+    }
+    
   }
 
   close() {

@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SpazaService {
   uid: any;
-  constructor(public afs: AngularFirestore, public afAuth: AngularFireAuth) {
+  constructor(public afs: AngularFirestore, 
+    public afAuth: AngularFireAuth,
+    private alertCtrl : AlertController,
+    private route : Router
+    ) {
 
   }
 
@@ -42,5 +48,26 @@ export class SpazaService {
   deleteprodduct(sid , pid){
     return this.afs.collection('spazashop').doc(sid).collection('products').doc(pid).delete();
   
+  }
+
+  deleteSpaza(Sid){
+    return this.afs.collection('spazashop').doc(Sid).delete().then(()=>{
+      
+      this.alertCtrl.create({
+          // message: 'Your spaza is successfully deleted',
+          subHeader: 'Your spaza is successfully deleted',
+          buttons: [
+  
+            {
+              text: 'ok',
+              handler: () => {
+                this.route.navigateByUrl('profile');
+              }
+            }
+          ]
+        }).then(
+          alert => alert.present()
+        );
+    })
   }
 }

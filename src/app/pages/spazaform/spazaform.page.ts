@@ -43,7 +43,7 @@ export class SpazaformPage implements OnInit {
 
 
 
-  urlPath= '';
+  urlPath = '';
   list: any;
 
   lng;
@@ -159,7 +159,7 @@ export class SpazaformPage implements OnInit {
       this.addresses = [];
     }
   }
-  clear(){
+  clear() {
     this.addresses = []
     console.log("hello")
   }
@@ -190,37 +190,56 @@ export class SpazaformPage implements OnInit {
     this.addresses = [];
   }
   async Register() {
-    const loading = this.loadingCtrl.create({
-      message: 'Registering in, Please wait...',
-    });
-    (await loading).present();
+    if(this.urlPath ==''){
+      this.alertCtrl.create({
+        // message: 'Please upload an image',
+        subHeader: 'Please upload an image',
+        buttons: [
 
-    this.afs.collection('spazashop').doc(this.uid).set({
-      spazaName: this.form.value.Spaza,
-      uid: this.uid,
-      Timestamp: Date.now(),
-      Discription: this.form.value.Discription,
-      Address: this.form.value.Address,
-      Hours: this.form.value.Hours,
-      Close: this.form.value.Close,
-      Number: this.form.value.Number,
-      photoURL: this.urlPath,
-      Registered: "yes",
-      lat: this.lat,
-      lng: this.lng,
-      commentCount: 0,
+          {
+            text: 'ok',
+            handler: () => {
 
-    }).then(() => {
-
-      this.authService.updateRegistered(this.uid, "yes").then(async () => {
-        (await loading).dismiss();
-        this.route.navigateByUrl('profile')
+            }
+          }
+        ]
+      }).then(
+        alert => alert.present()
+      );
+    }else{
+      const loading = this.loadingCtrl.create({
+        message: 'Registering in, Please wait...',
+      });
+      (await loading).present();
+  
+      this.afs.collection('spazashop').doc(this.uid).set({
+        spazaName: this.form.value.Spaza,
+        uid: this.uid,
+        Timestamp: Date.now(),
+        Discription: this.form.value.Discription,
+        Address: this.form.value.Address,
+        Hours: this.form.value.Hours,
+        Close: this.form.value.Close,
+        Number: this.form.value.Number,
+        photoURL: this.urlPath,
+        Registered: "yes",
+        lat: this.lat,
+        lng: this.lng,
+        commentCount: 0,
+  
+      }).then(() => {
+  
+        this.authService.updateRegistered(this.uid, "yes").then(async () => {
+          (await loading).dismiss();
+          this.route.navigateByUrl('profile')
+        })
+  
+      }).catch(err => {
+        alert(err.message)
       })
-
-    }).catch(err => {
-      alert(err.message)
-    })
-    this.urlPath = "";
+      this.urlPath = "";
+    }
+ 
 
   }
 
@@ -262,6 +281,36 @@ export class SpazaformPage implements OnInit {
     this.urlPath = "";
   }
 
+  delete() {
+    const alert = this.alertCtrl.create({
+      // message: "Are you sure you want to delete the spaza",
+      subHeader: 'Are you sure you want to delete the spaza',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Confirm',
+          handler: () => {
+            console.log("delete");
+            
+            this.spazaService.deleteSpaza(this.uid).then(() => {
+              this.spazaService=null
+              this.authService.updateRegistered(this.uid, "no")
+            })
+           
+          }
+        }
+      ]
+    }).then(
+      alert => alert.present()
+    );
+  }
   product() {
     this.route.navigate(['productlistowner'], { queryParams: { spazauid: this.uid } });
   }
