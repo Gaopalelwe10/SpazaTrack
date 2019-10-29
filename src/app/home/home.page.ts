@@ -37,14 +37,6 @@ export class HomePage {
   start;
   geojson : any = {};
   OBJ ;
-  tempDur;
-  distance;
-  duration;
-  text;
-  finalDistance;
-  finalDuration;
-  steps : any = [];
-  jotPos : any = [];
   plotLng : string;
   plotLat : string;
   coords : string;
@@ -82,7 +74,11 @@ export class HomePage {
 
     this.launchNavigator.navigate([shop.lat,shop.lng], {
       start: this.coords 
-  });
+  })
+  .then(
+    success => console.log("launch Navigator successful " + success),
+    error => console.log("error in launch Navigator  " + error)
+  );
 
    }
 
