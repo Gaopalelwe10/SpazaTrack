@@ -11,36 +11,6 @@
     <div #map id="map"></div>
     <div id='geocoder' class='geocoder'></div>
 
-    <div class="directions-control directions-control-directions" id="close" *ngIf="isDirection">
-        <div class="mapbox-directions-component mapbox-directions-route-summary" style="position: sticky;top: 0;">
-
-            <ion-icon name="close-circle-outline" class="close" (click)="directionClose()" float-right></ion-icon>
-            <h1> distance {{finalDuration}} KM</h1>
-            <span>Time {{finalDistance}} Mins</span>
-
-        </div>
-
-        <div class="mapbox-directions-instructions" *ngFor="let item of steps; let i =index" (click)="jotPip(item)">
-            <div class="mapbox-directions-instructions-wrapper">
-                <ul class="mapbox-directions-steps">
-                    <li class="mapbox-directions-step">
-
-
-                        <!-- <span class="directions-icon   directions-icon-{{item.maneuver.type}} directions-icon-{{item.maneuver.modifier}}"   >
-                              
-                        </span> -->
-
-                        <p>{{item.maneuver.instruction}}</p>
-
-                        <p>{{(item.distance / 1000).toFixed(2) }} KM</p>
-
-
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-    </div>
     <div class="bot">
 
         <div class="arrow">
