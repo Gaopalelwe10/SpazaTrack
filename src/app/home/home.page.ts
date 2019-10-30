@@ -35,13 +35,13 @@ export class HomePage {
 
   isDirection;
   start;
-  geojson : any = {};
-  OBJ ;
-  plotLng : string;
-  plotLat : string;
-  coords : string;
+  geojson: any = {};
+  OBJ;
+  plotLng: string;
+  plotLat: string;
+  coords: string;
   constructor(
-    private launchNavigator: LaunchNavigator, 
+    private launchNavigator: LaunchNavigator,
     public menuCtrl: MenuController,
     private authService: AuthService,
     public geolocation: Geolocation,
@@ -54,33 +54,34 @@ export class HomePage {
       this.spazalist = data;
       this.spazaload = data;
     })
-    
-    this.geolocation.getCurrentPosition()
-    .then((response) => {
 
-      this.startPosition = response.coords;
-      this.plotLat = this.startPosition.latitude;
-      this.plotLng = this.startPosition.longitude;
- 
-    })
+    this.geolocation.getCurrentPosition()
+      .then((response) => {
+
+        this.startPosition = response.coords;
+        this.plotLat = this.startPosition.latitude;
+        this.plotLng = this.startPosition.longitude;
+
+      })
   }
 
 
   ionViewWillEnter() {
     this.menuCtrl.enable(true);
   }
-  navigate(shop){
+  
+  navigate(shop) {
     console.log("** launch Navigator **")
 
-    this.launchNavigator.navigate([shop.lat,shop.lng], {
-      start: this.coords 
-  })
-  .then(
-    success => console.log("launch Navigator successful " + success),
-    error => console.log("error in launch Navigator  " + error)
-  );
+    this.launchNavigator.navigate([shop.lat, shop.lng], {
+      start: this.coords
+    })
+      .then(
+        success => console.log("launch Navigator successful " + success),
+        error => console.log("error in launch Navigator  " + error)
+      );
 
-   }
+  }
 
   ionViewDidEnter() {
     //   const loading = this.loadingCtrl.create({
@@ -131,7 +132,7 @@ export class HomePage {
 
     this.geolocation.getCurrentPosition()
       .then((response) => {
-
+console.log("jjj" + response.timestamp )
         this.startPosition = response.coords;
         // this.originPosition= response.Address;
         this.map.setCenter([this.startPosition.longitude, this.startPosition.latitude]);
@@ -144,8 +145,8 @@ export class HomePage {
 
         var marker = new mapboxgl.Marker(el)
           .setLngLat([this.startPosition.longitude, this.startPosition.latitude])
-          // .setPopup(new mapboxgl.Popup({ offset: 25 })
-          //   .setHTML('<p>' + this.startPosition.Address + '</p> '))
+          .setPopup(new mapboxgl.Popup({ offset: 25 })
+            .setHTML('<p>' + 'You are here' + '</p> '))
           .addTo(this.map);
       })
 
