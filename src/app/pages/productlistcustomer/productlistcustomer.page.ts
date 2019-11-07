@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestoreDocument, AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { NavParams, ModalController, AlertController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
-
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 @Component({
   selector: 'app-productlistcustomer',
   templateUrl: './productlistcustomer.page.html',
@@ -21,7 +21,8 @@ export class ProductlistcustomerPage implements OnInit {
     private navParams: NavParams,
     public modalCtrl: ModalController,
     private alertCtrl: AlertController,
-    private authService : AuthService
+    private authService : AuthService,
+    private Viewer: PhotoViewer,
   ) {
     this.spazauid = this.navParams.get('spazauid');
   }
@@ -69,7 +70,8 @@ export class ProductlistcustomerPage implements OnInit {
   close() {
     this.modalCtrl.dismiss();
   }
-  zoom(user){
-    this.authService.zoom(user)
+ 
+  zoom(url) {
+    this.Viewer.show(url.image, url.ProName, { share: true, copyToReference: true });
   }
 }

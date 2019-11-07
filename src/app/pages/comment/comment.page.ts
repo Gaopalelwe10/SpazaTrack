@@ -10,7 +10,7 @@ import { PopoverPage } from '../popover/popover.page';
 import { AddcommentPage } from '../addcomment/addcomment.page';
 import { ProductlistcustomerPageModule } from '../productlistcustomer/productlistcustomer.module';
 import { ProductlistcustomerPage } from '../productlistcustomer/productlistcustomer.page';
-
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 @Component({
   selector: 'app-comment',
   templateUrl: './comment.page.html',
@@ -48,7 +48,8 @@ export class CommentPage implements OnInit {
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private popoverController: PopoverController,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private Viewer: PhotoViewer,
     ) {
 
     this.uid = this.afAuth.auth.currentUser.uid;
@@ -114,8 +115,9 @@ export class CommentPage implements OnInit {
     this.isLoadComments="true";
     this.Recent=false;
   }
-  zoom(spaza){
-    this.authService.zoom(spaza);
+  
+  zoom(url) {
+    this.Viewer.show(url.photoURL, url.spazaName, { share: true, copyToReference: true });
   }
 
   async openPopover(ev: any ,  comment){

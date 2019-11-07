@@ -102,6 +102,8 @@
         "OKHTTP_VERSION": "3.12.0"
       }
     },
-    "platforms": []
+    "platforms": [
+      "android"
+    ]
   }
 }

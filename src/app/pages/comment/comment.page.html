@@ -19,7 +19,7 @@
 
             <div *ngIf="spaza.photoURL !=''">
                 <!-- <ion-img [src]="spaza.photoURL" (click)="zoom(spaza)"></ion-img> -->
-                <img src="{{spaza.photoURL}}">
+                <img src="{{spaza.photoURL}}" (click)="zoom(spaza)">
 
             </div>
             <!-- <ion-card-header>

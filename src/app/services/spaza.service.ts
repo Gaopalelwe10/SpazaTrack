@@ -52,22 +52,22 @@ export class SpazaService {
 
   deleteSpaza(Sid){
     return this.afs.collection('spazashop').doc(Sid).delete().then(()=>{
-      
-      this.alertCtrl.create({
-          // message: 'Your spaza is successfully deleted',
-          subHeader: 'Your spaza is successfully deleted',
-          buttons: [
+      this.route.navigateByUrl('profile');
+      // this.alertCtrl.create({
+      //     // message: 'Your spaza is successfully deleted',
+      //     subHeader: 'Your spaza is successfully deleted',
+      //     buttons: [
   
-            {
-              text: 'ok',
-              handler: () => {
-                this.route.navigateByUrl('profile');
-              }
-            }
-          ]
-        }).then(
-          alert => alert.present()
-        );
+      //       {
+      //         text: 'ok',
+      //         handler: () => {
+      //           this.route.navigateByUrl('profile');
+      //         }
+      //       }
+      //     ]
+      //   }).then(
+      //     alert => alert.present()
+      //   );
     })
   }
 }

@@ -283,7 +283,6 @@ export class SpazaformPage implements OnInit {
 
   delete() {
     const alert = this.alertCtrl.create({
-      // message: "Are you sure you want to delete the spaza",
       subHeader: 'Are you sure you want to delete the spaza',
       buttons: [
         {
