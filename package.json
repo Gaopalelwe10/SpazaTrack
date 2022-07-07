@@ -42,7 +42,7 @@
     "firebase": "^7.0.0",
     "ionic4-star-rating": "^1.1.0",
     "mapbox-gl": "^1.4.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",
     "uk.co.workingedge.phonegap.plugin.launchnavigator": "^5.0.4",
